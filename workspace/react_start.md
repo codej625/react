@@ -1,0 +1,20 @@
+# react 설치를 위해 필요한 것들을 알아보자!
+
+1. Node.js
+```
+Webpack 과 Babel 같은 도구들이 자바스크립트 런타임인 Node.js 를 기반으로 만들어졌다.
+필수로 설치 해주자.
+```
+
+2. Yarn
+```
+Yarn 은 조금 개선된 버전의 npm 이라고 이해하면 쉽다. 
+(npm 은 Node.js 를 설치하게 될 때 같이 딸려오는 패키지 매니저 도구이다.)
+```
+
+3. VSC
+```
+에디터로는 VSC를 추천.
+```
+
+4. Git bash(Windows) or Terminal(Mac)
