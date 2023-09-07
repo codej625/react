@@ -28,29 +28,35 @@ ex)
 ```
 <div></div> 
 ```
+
 <br/>
+
 ex) input 또는 br같이 닫는 태그가 없을경우 Self Closing 태그를 사용해야 한다.
 ```
 <input />
 <br />
 ```
+
 <br/>
+
 두번째로 한개 이상의 태그는 무조건 하나의 태그로 감싸져 있어여 한다.
 ex)
-```html
+```
 <div>
   <div>1</div>
   <div>2</div>
 </div>
 ```
 ex) Fragment(프래그먼트)를 사용하여 태그들을 감싸는 걸 추천한다.
-```html
+```
 <>
   <div>
   </div>
 </>
 ```
+
 <br/>
+
 세번째로 JSX 안에 자바스크립트 값 사용하기
 ex) JSX 내부에 자바스크립트 변수를 보여줘야 할 때에는 {} 으로 감싸서 보여준다.
 ```
@@ -59,7 +65,9 @@ ex) JSX 내부에 자바스크립트 변수를 보여줘야 할 때에는 {} 으
   <div>{name}</div>
 </>
 ```
+
 <br/>
+
 네번째로 style 과 className 설정하기
 ```
 JSX 에서 태그에 style 과 CSS class 를 설정하는 방법은 HTML 에서 설정하는 방법과 다르다.
