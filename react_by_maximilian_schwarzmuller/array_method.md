@@ -9,7 +9,12 @@ console.log(hobbies[0]); /* index를 통해 값을 엑세스 한다. */
 
 hobbies.push('working'); /* array에 값을 추가한다. */
 console.log(hobbies); /* working이 추가 되었음을 확인 할 수 있다. */
+```
 
+<br/>
+
+2. findIndex 
+```javascript
 const index = hobbies.findIndex((item) => { /* 특정 값의 index를 찾아주는 함수 */
   return item === 'Sports'; /* array에서 특정 값을 찾아내면 해당 index를 반환하고, 아니면 아무것도 하지 않는다. */
 });
