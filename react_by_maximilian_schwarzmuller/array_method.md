@@ -44,3 +44,15 @@ function transformToObjects(numberArray) {
   return result;
 }
 ```
+
+<br/>
+
+4. filter
+```javascript
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const evenNumbers = numbers.filter(number => { /* 짝수만 걸러내기 */
+  return number % 2 === 0;
+});
+console.log(evenNumbers);
+```
