@@ -35,14 +35,14 @@ console.log(첫번째이름, 두번째이름);
 
 2. 함수 매개변수 목록에서 디스트럭처링
 ```javascript
-1)
-function storeOrder(order) { /* 일반적인 방법 */
+/* 일반적인 방법 */
+function storeOrder(order) {
   console.log('id', order.id);
   console.log('currency', order.currency);
 }
 
-2)
-function storeOrder({id, currency}) { /* 디스트럭처링 */
+/* 디스트럭처링 */
+function storeOrder({id, currency}) {
   console.log('id', id);
   console.log('currency', currency);
 }
