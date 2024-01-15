@@ -37,15 +37,19 @@ console.log(첫번째이름, 두번째이름);
 ```javascript
 1)
 function storeOrder(order) { /* 일반적인 방법 */
-  localStorage.setItem('id', order.id);
-  localStorage.setItem('currency', order.currency);
+  console.log('id', order.id);
+  console.log('currency', order.currency);
 }
 
 2)
 function storeOrder({id, currency}) { /* 디스트럭처링 */
-  localStorage.setItem('id', id);
-  localStorage.setItem('currency', currency);
+  console.log('id', id);
+  console.log('currency', currency);
 }
 
+/*
+  const data = {id2: 5, currency: 'USD', amount: 15.99};
+  storeOrder(data); 이렇게 변수에 넣어 사용도 가능
+*/
 storeOrder({id: 5, currency: 'USD', amount: 15.99}); /* 1개의 매개변수 값을 사용한다. */
 ```
