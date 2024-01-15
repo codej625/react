@@ -2,6 +2,7 @@
 
 <br/>
 
+1. 배열, 객체 디스트럭처링
 ```javascript
 const userNameData = ['lee', 'jinwoo'];
 
@@ -27,4 +28,24 @@ const {firstName: 첫번째이름, lastName: 두번째이름} = {
   lastName: 'jinwoo'
 };
 console.log(첫번째이름, 두번째이름);
+```
+
+<br/>
+
+
+2. 함수 매개변수 목록에서 디스트럭처링
+```javascript
+1)
+function storeOrder(order) { /* 일반적인 방법 */
+  localStorage.setItem('id', order.id);
+  localStorage.setItem('currency', order.currency);
+}
+
+2)
+function storeOrder({id, currency}) { /* 디스트럭처링 */
+  localStorage.setItem('id', id);
+  localStorage.setItem('currency', currency);
+}
+
+storeOrder({id: 5, currency: 'USD', amount: 15.99}); /* 1개의 매개변수 값을 사용한다. */
 ```
