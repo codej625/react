@@ -35,6 +35,8 @@
 }
 ```
 
+<br />
+
 2. App.js
 ```jsx
 import "./App.css";
