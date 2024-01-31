@@ -2,6 +2,40 @@
 
 <br />
 
+1. App.css
+```css
+.container {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.btn-nomal {
+  width: 200px;
+  border: 2px solid;
+  border-radius: 10px;
+}
+
+.btn-reset {
+  width: 200px;
+  margin-top: 20px;
+  background: rgb(255, 157, 157);
+  border: 2px solid;
+  border-radius: 10px;
+}
+
+.count-display {
+  padding: 20px;
+  font-size: 20px;
+}
+```
+
+2. App.js
 ```jsx
 import "./App.css";
 import React, { useState } from "react"; /* useState import */
@@ -13,8 +47,9 @@ function App() {
     return 0;
   };
 
+  /* 콜백 함수로 값을 넣어주면 처음 한번만 렌더링 된다. */
   const [count, setCount] = useState(() => {
-    return heayWork(); /* 콜백 함수로 값을 넣어주면 처음 한번만 렌더링 된다. */
+    return heayWork();
   });
 
   function plus() {
@@ -32,11 +67,17 @@ function App() {
     });
   }
 
+  function reset() {
+    setCount((prev) => {
+      return prev = 0;
+    });
+  }
+
   return (
     <>
       <div className="container">
         <button
-          className="button-design"
+          className="btn-nomal"
           type="button" 
           onClick={plus}
         >
@@ -46,11 +87,19 @@ function App() {
         <div className="count-display">{count}</div>
 
         <button
-          className="button-design"
+          className="btn-nomal"
           type="button" 
           onClick={minus}
         >
           빼기
+        </button>
+        <br />
+        <button
+          className="btn-reset"
+          type="button" 
+          onClick={reset}
+        >
+          리셋
         </button>
       </div>
     </>
