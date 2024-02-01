@@ -1,29 +1,17 @@
 .container {
-  text-align: center;
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 20px;
   border: 1px solid;
   border-radius: 10px;
 }
-
-.btn-nomal {
-  width: 200px;
-  border: 2px solid;
-  border-radius: 10px;
+.check-btn {
+  text-align: right;
 }
-
-.btn-reset {
-  width: 200px;
-  margin-top: 20px;
-  background: rgb(255, 157, 157);
-  border: 2px solid;
-  border-radius: 10px;
-}
-
-.count-display {
-  padding: 20px;
-  font-size: 20px;
+.contents {
+  margin-right: 10px;
 }
