@@ -12,22 +12,22 @@ npm install express react react-dom
 
 2) server.js 파일을 만든다.
 
-```node
+```javascript
 const express = require('express');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// 정적 파일을 제공할 디렉토리 설정
+/* 정적 파일을 제공할 디렉토리 설정 */
 app.use(express.static(path.join(__dirname, '{project_name}/build')));
 
-// 리액트 앱 호스팅
+/* 리액트 앱 호스팅 */
 app.get('/react', (req, res) => {
   res.sendFile(path.join(__dirname, '{project_name}/build', 'index.html'));
 });
 
-// 포트에서 서버 실행
+/* 포트에서 서버 실행 */
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
