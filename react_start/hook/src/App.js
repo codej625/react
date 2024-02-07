@@ -1,47 +1,49 @@
 import "./App.css";
-// import Count from "./Count";
+/* import Count from "./Count"; */
 import React, { useEffect, useState } from "react";
 
 function App() {
+  const insertScript = require('./Test'); /* Script insertion test conducted */
 
   const [data, setData] = useState(null);
   const [data2, setData2] = useState(null);
 
   useEffect(() => {
-      fetch('/api/data')
-        .then(response => response.json())
-        .then(data => setData(data))
-        .catch(error => console.error('Error fetching data:', error));
+    fetch("/api/data")
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching data:", error));
+    insertScript();
   }, []);
 
   const fetchTest = () => {
-    fetch('/api/data2')
-      .then(response => response.json())
-      .then(data => setData2(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }
+    fetch("/api/data2")
+      .then((response) => response.json())
+      .then((data) => setData2(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  };
 
-  const [insert, setInsert] = useState(()=> {
+  const [insert, setInsert] = useState(() => {
     return {
-      user: '',
-      age: '',
+      user: "",
+      age: "",
     };
   });
-  
-  const [inputs, setInput] = useState(()=> {
+
+  const [inputs, setInput] = useState(() => {
     return {
-      user: '',
-      age: '',
+      user: "",
+      age: "",
     };
   });
-  const {user, age} = inputs;
+  const { user, age } = inputs;
 
   function inputChange(e) {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
     setInput({
       ...inputs,
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -49,11 +51,11 @@ function App() {
     setInsert({
       ...insert,
       ...inputs,
-    })
+    });
     setInput({
-      ...inputs, 
-        user: '',
-        age: ''
+      ...inputs,
+      user: "",
+      age: "",
     });
   }
 
