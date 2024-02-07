@@ -1,8 +1,26 @@
 import "./App.css";
 // import Count from "./Count";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function App() {
+
+  const [data, setData] = useState(null);
+  const [data2, setData2] = useState(null);
+
+  useEffect(() => {
+      fetch('/api/data')
+        .then(response => response.json())
+        .then(data => setData(data))
+        .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  const fetchTest = () => {
+    fetch('/api/data2')
+      .then(response => response.json())
+      .then(data => setData2(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }
+
   const [insert, setInsert] = useState(()=> {
     return {
       user: '',
@@ -72,8 +90,22 @@ function App() {
           onClick={inputInsert} 
           type="button"
         >
-          확인
+          Check
         </button>
+      </div>
+
+      <div>
+        <h1>React-Express 연동 예제</h1>
+        {data && <p>{data.message}</p>}
+        <span>
+          <button 
+            onClick={fetchTest} 
+            type="button"
+          >
+            Test
+          </button>
+          {data2 && <> {data2.message}</>}
+        </span>
       </div>
     </div>
   );
