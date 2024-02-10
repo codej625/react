@@ -1,4 +1,4 @@
-# Arrow Functions에 대해 알아보자!
+# Arrow Function에 대해 알아보자!
 
 <br />
 
