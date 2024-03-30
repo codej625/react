@@ -29,7 +29,7 @@ pnpm create vite
 
 <br />
 
-2. 어떤 프로젝트를 만들지 선택한다.
+2. 프로젝트 이름과 생성할 타입을 선택한다.
 ```
 vanilla, vanilla-ts,
 vue, vue-ts,
@@ -43,11 +43,11 @@ svelte, svelte-ts
 
 3. vite가 설치된 폴더로 이동하여 Node.js 프로젝트에 필요한 종속성을 설치한다.
 ```
-cd vite-project
+1) cd vite-project
 
-npm install
+2) npm install
 
-npm run dev
+3) npm run dev
 ```
 ```
 기본 포트는 3000이 아닌 5173이다.
