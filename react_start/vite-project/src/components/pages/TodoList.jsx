@@ -1,61 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Input from '@components/common/Input';
 import Button from '@components/common/Button';
+import { useTodoListLogic } from '@script/pages/TodoListLogic';
 
 function TodoList() {
-  
-  const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState('');
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editedTodo, setEditedTodo] = useState('');
 
-  /* Add */
-  const addTodo = () => {
-    if (newTodo.trim() !== '') {
-      setTodos([...todos, { text: newTodo, checked: false }]);
-      setNewTodo('');
-    }
-  };
-
-  /* Remove */
-  const removeTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
-  };
-
-  /* Update */
-  const startEditing = (index, todo) => {
-    setEditingIndex(index);
-    setEditedTodo(todo.text);
-  };
-
-  /* Update check */
-  const finishEditing = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].text = editedTodo;
-    setTodos(newTodos);
-    setEditingIndex(null);
-    setEditedTodo('');
-  };
-
-  /* Update cancel */
-  const cancelEditing = () => {
-    setEditingIndex(null);
-    setEditedTodo('');
-  };
-
-  /* Checkbox check */
-  const toggleCheckbox = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].checked = !newTodos[index].checked;
-    setTodos(newTodos);
-  };
+  const {
+    todos,
+    newTodo,
+    editingIndex,
+    editedTodo,
+    setNewTodo,
+    addTodo,
+    removeTodo,
+    startEditing,
+    finishEditing,
+    cancelEditing,
+    toggleCheckbox,
+  } = useTodoListLogic();
 
   return (
     <div>
-      <h2>Todo List</h2>
       <Input 
+        className={'margin-right-1'}
         type={"text"} 
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
@@ -68,8 +35,9 @@ function TodoList() {
       <ul>
         {
           todos.map((todo, index) => (
-            <li key={index}>
-              <Input 
+            <li key={todo.key}>
+              <Input
+                className={'margin-right-1'}
                 type={"checkbox"} 
                 checked={todo.checked} 
                 onChange={() => toggleCheckbox(index)} 
@@ -77,24 +45,27 @@ function TodoList() {
               {
                 editingIndex === index ? (
                   <>
-                    <Input 
+                    <Input
+                      className={'margin-right-1'}
                       type={"text"} 
                       value={editedTodo} 
                       onChange={(e) => setEditedTodo(e.target.value)} 
                     />
-                    <Button 
+                    <Button
+                      className={'margin-right-1'}
                       text={"Confirm"} 
                       onClick={() => finishEditing(index)} 
                     />
                     <Button 
                       text={"Cancel"} 
-                      onClick={() => cancelEditing} 
+                      onClick={cancelEditing} 
                     />
                   </>
                 ) : (
                   <>
                     <span style={{ textDecoration: todo.checked ? "line-through" : "none" }}>{todo.text}</span>
                     <Button 
+                      className={'margin-right-1'}
                       text={"Edit"} 
                       onClick={() => startEditing(index, todo)} 
                     />

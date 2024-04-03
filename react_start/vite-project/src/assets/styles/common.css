@@ -2,8 +2,18 @@
 
 #wrap {
   text-align: center;
-  border: 1px solid;
-  width: 500px;
   margin: 0 auto;
   padding: 50px 0;
+}
+
+.margin-right-1 {
+  margin-right: 5px;
+}
+
+.text-decoration {
+  text-decoration: line-through;
+}
+
+.text-decoration-none {
+  text-decoration: line-through;
 }

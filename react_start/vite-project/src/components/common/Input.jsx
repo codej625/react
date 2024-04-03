@@ -1,7 +1,8 @@
-function Input({ type, value, checked, onChange, placeholder }) {
+function Input({ className, type, value, checked, onChange, placeholder }) {
 
   return (
     <input
+      className={className}
       type={type}
       value={value}
       checked={checked}
