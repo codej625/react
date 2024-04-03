@@ -52,6 +52,7 @@ export function useTodoListLogic() {
     editingIndex,
     editedTodo,
     setNewTodo,
+    setEditedTodo,
     addTodo,
     removeTodo,
     startEditing,

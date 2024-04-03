@@ -11,6 +11,7 @@ function TodoList() {
     editingIndex,
     editedTodo,
     setNewTodo,
+    setEditedTodo,
     addTodo,
     removeTodo,
     startEditing,
@@ -63,7 +64,7 @@ function TodoList() {
                   </>
                 ) : (
                   <>
-                    <span style={{ textDecoration: todo.checked ? "line-through" : "none" }}>{todo.text}</span>
+                    <span className={`margin-right-1 ${todo.checked ? 'text-decoration' : 'text-decoration-none'}`}>{todo.text}</span>
                     <Button 
                       className={'margin-right-1'}
                       text={"Edit"} 
