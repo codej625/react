@@ -5,7 +5,9 @@ function Main() {
   return (
     <main>
       <h2>Todo List</h2>
-      <TodoList />
+      <section>
+        <TodoList />
+      </section>
     </main>
   );
   

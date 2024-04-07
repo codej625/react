@@ -6,6 +6,23 @@
   padding: 50px 0;
 }
 
+.container {
+  width: 380px;
+  height: 380px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid;
+  border-radius: 25px;
+}
+
+.add-design-input {
+  height: 20px;
+  width: 200px;
+}
+.add-design-button {
+  height: 26px;
+}
+
 .margin-right-1 {
   margin-right: 5px;
 }

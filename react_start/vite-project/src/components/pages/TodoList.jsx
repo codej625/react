@@ -21,15 +21,16 @@ function TodoList() {
   } = useTodoListLogic();
 
   return (
-    <div>
+    <div className="container">
       <Input 
-        className={'margin-right-1'}
+        className={"add-design-input margin-right-1"}
         type={"text"} 
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         placeholder={"Add new todo"}
       />
       <Button
+        className={"add-design-button"}
         text={"Add"} 
         onClick={addTodo} 
       />
@@ -38,7 +39,7 @@ function TodoList() {
           todos.map((todo, index) => (
             <li key={todo.key}>
               <Input
-                className={'margin-right-1'}
+                className={"margin-right-1"}
                 type={"checkbox"} 
                 checked={todo.checked} 
                 onChange={() => toggleCheckbox(index)} 
@@ -47,13 +48,13 @@ function TodoList() {
                 editingIndex === index ? (
                   <>
                     <Input
-                      className={'margin-right-1'}
+                      className={"margin-right-1"}
                       type={"text"} 
                       value={editedTodo} 
                       onChange={(e) => setEditedTodo(e.target.value)} 
                     />
                     <Button
-                      className={'margin-right-1'}
+                      className={"margin-right-1"}
                       text={"Confirm"} 
                       onClick={() => finishEditing(index)} 
                     />
@@ -64,9 +65,9 @@ function TodoList() {
                   </>
                 ) : (
                   <>
-                    <span className={`margin-right-1 ${todo.checked ? 'text-decoration' : 'text-decoration-none'}`}>{todo.text}</span>
+                    <span className={`margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}>{todo.text}</span>
                     <Button 
-                      className={'margin-right-1'}
+                      className={"margin-right-1"}
                       text={"Edit"} 
                       onClick={() => startEditing(index, todo)} 
                     />
