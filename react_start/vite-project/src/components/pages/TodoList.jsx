@@ -65,7 +65,7 @@ function TodoList() {
                   </>
                 ) : (
                   <>
-                    <span className={`margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}>{todo.text}</span>
+                    <span className={`add-list margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}>{todo.text}</span>
                     <Button 
                       className={"margin-right-1"}
                       text={"Edit"} 

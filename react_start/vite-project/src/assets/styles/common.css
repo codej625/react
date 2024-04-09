@@ -23,6 +23,11 @@
   height: 26px;
 }
 
+.add-list {
+  display: inline-block;
+  width: 200px;
+}
+
 .margin-right-1 {
   margin-right: 5px;
 }
