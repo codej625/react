@@ -67,11 +67,12 @@ function TodoList() {
                   <>
                     <span className={`add-list margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}>{todo.text}</span>
                     <Button 
-                      className={"margin-right-1"}
+                      className={"add-design-button margin-right-1"}
                       text={"Edit"} 
                       onClick={() => startEditing(index, todo)} 
                     />
-                    <Button 
+                    <Button
+                      className={"add-design-button"} 
                       text={"Remove"} 
                       onClick={() => removeTodo(index)} 
                     />
