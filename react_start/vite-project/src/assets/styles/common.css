@@ -26,10 +26,20 @@
 .add-list {
   display: inline-block;
   width: 200px;
+  border: 2px solid #dedede;
+  border-radius: 3px;
+}
+
+.margin-top-1 {
+  margin-top: 5px;
 }
 
 .margin-right-1 {
   margin-right: 5px;
+}
+
+.text-overflow {
+  overflow: hidden;
 }
 
 .text-decoration {

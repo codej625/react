@@ -37,13 +37,7 @@ function TodoList() {
       <ul>
         {
           todos.map((todo, index) => (
-            <li key={todo.key}>
-              <Input
-                className={"margin-right-1"}
-                type={"checkbox"} 
-                checked={todo.checked} 
-                onChange={() => toggleCheckbox(index)} 
-              />
+            <li className="margin-top-1" key={todo.key}>
               {
                 editingIndex === index ? (
                   <>
@@ -64,9 +58,20 @@ function TodoList() {
                     />
                   </>
                 ) : (
-                  <>
-                    <span className={`add-list margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}>{todo.text}</span>
-                    <Button 
+                  <div>
+                    <Input
+                      className={"margin-right-1"}
+                      type={"checkbox"} 
+                      checked={todo.checked} 
+                      onChange={() => toggleCheckbox(index)} 
+                    />
+                    <Input 
+                      className={`add-design-input add-list text-overflow margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}
+                      type={"text"} 
+                      value={todo.text}
+                      readOnly={"true"}
+                    />
+                    <Button
                       className={"add-design-button margin-right-1"}
                       text={"Edit"} 
                       onClick={() => startEditing(index, todo)} 
@@ -76,7 +81,7 @@ function TodoList() {
                       text={"Remove"} 
                       onClick={() => removeTodo(index)} 
                     />
-                  </>
+                  </div>
                 )
               }
             </li>
