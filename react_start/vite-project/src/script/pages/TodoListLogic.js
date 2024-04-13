@@ -17,9 +17,13 @@ export function useTodoListLogic() {
   };
 
   const removeTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    const check = confirm('삭제하시겠습니까?');
+    if (check) {
+      const newTodos = [...todos];
+      newTodos.splice(index, 1);
+      return setTodos(newTodos);
+    }
+    alert('삭제를 취소하였습니다.');
   };
 
   const startEditing = (index, todo) => {
