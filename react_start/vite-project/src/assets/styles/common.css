@@ -24,8 +24,10 @@
 }
 
 .add-list {
+  display: inline-block;
   width: 200px;
-  border: none;
+  border: 2px solid #dedede;
+  border-radius: 3px;
 }
 
 .margin-top-1 {
