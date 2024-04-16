@@ -67,3 +67,21 @@ export default function Button({ caption, type = "submit" }) {
 ```
 
 위와 같이 기본값을 설정할 수 있다.
+
+<br /><br />
+
+4. 기타
+
+```javascript
+<CoreConcept>text<CoreConcept/>
+```
+
+위와 같이 커스텀 컴포넌트로 값을 감싼 후,
+
+```javascript
+export default function CoreConcept({ prop }) {
+  // Use {prop} prop의 값은 text이다.
+}
+```
+
+이런식으로 사용도 가능하다.
