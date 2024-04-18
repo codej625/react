@@ -36,3 +36,105 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.container > div {
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.user-list {
+  list-style: none;
+  padding: 0;
+  width: 100%; /* 사용자 목록의 너비를 100%로 설정 */
+}
+
+.user-item {
+  background-color: #f5f6f7;
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-username {
+  margin-right: 10px;
+}
+
+.user-id {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.input-wrap {
+  margin-top: 100px;
+  padding: 10px;
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+}
+
+.input-section {
+  margin-bottom: 20px;
+  border: 1px solid #dddfe2;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
+.input-group input {
+  width: calc(100% - 24px); /* 입력 창의 너비를 조정 */
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.input-group input::placeholder {
+  color: #a0a0a0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
