@@ -32,10 +32,10 @@ JSX 가 JavaScript 로 제대로 변환이 되려면 지켜주어야 하는 몇�
 
 1\) 태그를 열었으면 꼭 닫아주어야 한다.
 ```html
-ex)
+<!-- ex) -->
 <div></div> 
 
-ex) input 또는 br같이 닫는 태그가 없을경우 Self Closing 태그를 사용해야 한다.
+<!-- ex) input 또는 br같이 닫는 태그가 없을경우 Self Closing 태그를 사용해야 한다. -->
 <input />
 <br />
 ```
@@ -44,14 +44,13 @@ ex) input 또는 br같이 닫는 태그가 없을경우 Self Closing 태그를 �
 
 2\) 한개 이상의 태그는 무조건 하나의 태그로 감싸져 있어여 한다.
 ```html
-ex)
+<!-- ex) -->
 <div>
   <div>1</div>
   <div>2</div>
 </div>
 
-
-ex) Fragment(프래그먼트)를 사용하여 태그를 감싸는 걸 추천한다.
+<!-- ex) Fragment(프래그먼트)를 사용하여 태그를 감싸는 걸 추천한다. -->
 <>
   <div></div>
 </>
@@ -66,19 +65,24 @@ or
 <br />
 
 3\) JSX 안에 자바스크립트 값 사용하기
-```html
-ex) JSX 내부에 자바스크립트 변수를 보여줘야 할 때에는 {} 으로 감싸서 보여준다.
+```javascript
+/* ex) JSX 내부에 자바스크립트 변수를 보여줘야 할 때에는 {} 으로 감싸서 보여준다. */
 
-<>
-  <div>이름</div>
-  <div>{name}</div>
-</>
+function App() {
+  const name = 'react';
+
+  return (
+    <>
+      <div>이름</div>
+      <div>{name}</div>
+    </>
+  );
+}
 ```
 
-<br /><br />
+<br />
 
-4. << style 과 className 설정하기 >>
----
+4\) style 과 className 설정하기
 ```
 JSX 에서 태그에 style 과 CSS class 를 설정하는 방법은 HTML 에서 설정하는 방법과 다르다.
 우선, 인라인 스타일은 객체 형태로 작성을 해야 하며, 
@@ -88,44 +92,29 @@ background-color 처럼 - 로 구분되어 있는 이름들은 backgroundColor �
 <br />
 
 ```javascript
-ex)
-
+/* ex) 인라인 스타일 적용 */
 function App() {
-  const name = 'react';
   const style = {
     backgroundColor: 'black',
     color: 'aqua',
-    fontSize: 24, // 기본 단위 px
-    padding: '1rem' // 다른 단위 사용 시 문자열로 설정
+    fontSize: 24, /* 기본 단위 px */
+    padding: '1rem' /* 다른 단위 사용 시 문자열로 설정 */
   }
 
   return (
     <>
       <Hello />
-      <div style={style}>{name}</div>
+      <div style={style}>CSS</div>
     </>
   );
 }
-```
 
-<br />
-
-```javascript
-ex) CSS class 를 설정 할 때에는 class= 가 아닌 className= 으로 설정을 해주어야 한다.
-
+/* ex) CSS class 를 설정 할 때에는 class= 가 아닌 className= 으로 설정을 해주어야 한다. */
 function App() {
-  const name = 'react';
-  const style = {
-    backgroundColor: 'black',
-    color: 'aqua',
-    fontSize: 24, // 기본 단위 px
-    padding: '1rem' // 다른 단위 사용 시 문자열로 설정
-  }
 
   return (
     <>
       <Hello />
-      <div style={style}>{name}</div>
       <div className="gray-box"></div>
     </>
   );
