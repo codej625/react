@@ -1,18 +1,19 @@
 import * as React from 'react'
-import Header from '@components/layout/Header';
-import Main from '@components/layout/Main';
-import Footer from '@components/layout/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Wrap from '@components/layout/Wrap';
+import RouterTest from '@components/pages/RouterTest';
 import '@assets/styles/common.css';
 
 function App() {
 
   return (
     <>
-      <div id="wrap">
-        <Header />
-        <Main />
-        <Footer />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Wrap />} />
+          <Route path="/router" element={<RouterTest />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
