@@ -25,8 +25,5 @@ const [state, setState] = useState(0);
 ex) setter에 콜백 함수중 첫번째 파라미터는 state에 값이다.
 ```
 ```javascript
-setState(PrevState => PrevState +1);
-```
-```
-현재 state의 값은 1이 된다.
+setState(PrevState => PrevState +1); /* 현재 state의 값은 1이 된다. */
 ```
