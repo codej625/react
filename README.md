@@ -1,2 +1,4 @@
 # react_2023
-20230903일 다시 시작하는 리액트 공부
+```
+20230903_restarting_react_studies
+```
