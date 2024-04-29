@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export function useTodoListLogic() {
@@ -10,7 +10,6 @@ export function useTodoListLogic() {
   const addTodo = () => {
     if (newTodo.trim() !== '') {
       const uuid = uuidv4();
-      console.log(uuid);
       setTodos([...todos, { key: uuid, text: newTodo, checked: false }]);
       setNewTodo('');
     }
@@ -46,11 +45,17 @@ export function useTodoListLogic() {
     setTodos(newTodos);
   };
 
+  const key = useId();
+
+  const inputFocus = useRef();
+
   return {
     todos,
     newTodo,
     editingIndex,
     editedTodo,
+    key,
+    inputFocus,
     setNewTodo,
     setEditedTodo,
     addTodo,
@@ -59,5 +64,6 @@ export function useTodoListLogic() {
     finishEditing,
     cancelEditing,
     toggleCheckbox,
+    useEffect,
   };
 }

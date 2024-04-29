@@ -1,7 +1,7 @@
-import { useState } from 'react';
+// import { useEffect, useId } from 'react';
 import Input from '@components/common/Input';
 import Button from '@components/common/Button';
-import { useTodoListLogic } from '@script/pages/TodoListLogic';
+import { useTodoListLogic } from '@script/pages/TodoList';
 
 function TodoList() {
 
@@ -10,6 +10,8 @@ function TodoList() {
     newTodo,
     editingIndex,
     editedTodo,
+    key,
+    inputFocus,
     setNewTodo,
     setEditedTodo,
     addTodo,
@@ -28,6 +30,7 @@ function TodoList() {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         placeholder={"Add new todo"}
+        ref={inputFocus}
       />
       <Button
         className={"add-design-button"}
@@ -37,7 +40,7 @@ function TodoList() {
       <ul>
         {
           todos.map((todo, index) => (
-            <li className="margin-top-1" key={todo.key}>
+            <li className="margin-top-1" key={key+index}>
               {
                 editingIndex === index ? (
                   <>
@@ -69,7 +72,7 @@ function TodoList() {
                       className={`add-design-input add-list text-overflow margin-right-1 ${todo.checked ? "text-decoration" : "text-decoration-none"}`}
                       type={"text"} 
                       value={todo.text}
-                      readOnly={"true"}
+                      readOnly={true}
                     />
                     <Button
                       className={"add-design-button margin-right-1"}
