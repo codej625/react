@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter>{/* Router test */}
         <Routes>
           <Route path="/" element={<Wrap />} />
           <Route path="/router" element={<RouterTest />} />

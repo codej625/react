@@ -31,7 +31,6 @@ function TodoList() {
         placeholder={"Add new todo"}
         ref={inputFocus}
         todos={todos}
-
       />
       <Button
         className={"add-design-button"}
