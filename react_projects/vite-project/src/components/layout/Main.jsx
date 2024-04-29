@@ -4,9 +4,11 @@ function Main() {
 
   return (
     <main>
-      <h2>Todo List</h2>
       <section>
-        <TodoList />
+        <div className="container">
+          <h2>Todo List</h2>
+          <TodoList />
+        </div>
       </section>
     </main>
   );

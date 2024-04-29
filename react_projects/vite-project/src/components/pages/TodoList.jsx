@@ -1,4 +1,3 @@
-// import { useEffect, useId } from 'react';
 import Input from '@components/common/Input';
 import Button from '@components/common/Button';
 import { useTodoListLogic } from '@script/pages/TodoList';
@@ -23,7 +22,7 @@ function TodoList() {
   } = useTodoListLogic();
 
   return (
-    <div className="container">
+    <>
       <Input 
         className={"add-design-input margin-right-1"}
         type={"text"} 
@@ -31,6 +30,8 @@ function TodoList() {
         onChange={(e) => setNewTodo(e.target.value)}
         placeholder={"Add new todo"}
         ref={inputFocus}
+        todos={todos}
+
       />
       <Button
         className={"add-design-button"}
@@ -40,7 +41,7 @@ function TodoList() {
       <ul>
         {
           todos.map((todo, index) => (
-            <li className="margin-top-1" key={key+index}>
+            <li className="margin-top-1" key={key + index} id={key + index}>
               {
                 editingIndex === index ? (
                   <>
@@ -91,7 +92,7 @@ function TodoList() {
           ))
         }
       </ul>
-    </div>
+    </>
   );
 
 }

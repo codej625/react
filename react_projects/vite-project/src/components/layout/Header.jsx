@@ -4,8 +4,10 @@ function Header() {
 
   return (
     <header>
-      <p>Header</p>
-      <nav></nav>
+      <div id="header-wrap">
+        <p>Header</p>
+        <nav></nav>
+      </div>
     </header>
   )
   

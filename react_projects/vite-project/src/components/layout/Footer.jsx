@@ -4,7 +4,9 @@ function Footer() {
 
   return (
     <footer>
-      <p>Footer</p>
+      <div id="footer-wrap">
+        <p>Footer</p>
+      </div>
     </footer>
   )
   
