@@ -1,22 +1,18 @@
-# react app을 만들어보자!
+# React 앱을 만들어보자!
 
-1. create react app
+<br /><br />
+
+1. React 프로젝트 만들기
 ```
-npx create-react-app {project name}
+CRA -> npx create-react-app {project name}
+Vite -> npm create vite@latest
 ```
 
-2. react project start
+<br />
 
-### yarn을 사용시
+2. React 프로젝트 시작하기
 ```
-yarn start
-```
-### npm을 사용시
-```
-npm start
-``` 
-
-3. 브라우저에서 확인하기
-```
-브라우저에 http://localhost:3000 을 입력하고 프로젝트가 정상적으로 실행되는지 확인한다.
+yarn -> yarn start
+npm -> npm start
+vite -> npm run dev
 ```
