@@ -2,7 +2,7 @@
 
 <br /><br />
 
-1. React 프로젝트 만들기
+1. React 프로젝트 만들기
 ```
 CRA -> npx create-react-app {project name}
 Vite -> npm create vite@latest
