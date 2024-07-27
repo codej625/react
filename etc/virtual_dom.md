@@ -2,7 +2,7 @@
 
 <br /><br />
 
-* Virtual DOM(Document Object Model)?
+* DOM(Document Object Model)
 ---
 
 ```
@@ -12,9 +12,17 @@
 DOM은 JavaScript를 통해 동적으로 변경할 수 있다.
 하지만 DOM 조작은 비용이 많이 들고,
 특히 대규모 애플리케이션에서는 성능 문제를 초래할 수 있다.
+```
 
+<br /><br /><br />
+
+* Virtual DOM ?
+---
+
+```
 Virtual DOM은 실제 DOM의 가벼운 복사본으로,
 이전 상태와 새로운 상태의 차이를 최소화하여
+(DOM 과 Virtual DOM을 비교)
 변경 사항만을 업데이트하는 방식으로 동작한다.
 (업데이트 시 렌더링이 발생)
 
