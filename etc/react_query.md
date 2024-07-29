@@ -116,6 +116,133 @@ export default MyComponent;
 
 <br /><br />
 
+3-1. GET 방식 다른 예시
+
+```jsx
+import React from 'react';
+import { useQuery } from 'react-query';
+
+const fetchTodos = async () => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+function Todos() {
+  const { data, error, isLoading } = useQuery('todos', fetchTodos);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
+
+  return (
+    <div>
+      {data.map(todo => (
+        <div key={todo.id}>{todo.title}</div>
+      ))}
+    </div>
+  );
+}
+
+export default Todos;
+```
+
+<br />
+
+3-2. POST 방식 다른 예시
+
+```jsx
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+
+const addTodo = async (newTodo) => {
+  const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newTodo),
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+function AddTodo() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(addTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos');
+    },
+  });
+
+  const handleAddTodo = () => {
+    mutation.mutate({ title: 'New Todo', completed: false });
+  };
+
+  return (
+    <div>
+      <button onClick={handleAddTodo}>Add Todo</button>
+      {mutation.isLoading && <div>Adding todo...</div>}
+      {mutation.isError && <div>An error occurred: {mutation.error.message}</div>}
+    </div>
+  );
+}
+
+export default AddTodo;
+```
+
+<br />
+
+
+3-3. PUT 방식(데이터 수정) 예시
+
+```jsx
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+
+const updateTodo = async (updatedTodo) => {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${updatedTodo.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedTodo),
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+function UpdateTodo() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(updateTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('todos');
+    },
+  });
+
+  const handleUpdateTodo = (id) => {
+    mutation.mutate({ id, title: 'Updated Todo', completed: true });
+  };
+
+  return (
+    <div>
+      <button onClick={() => handleUpdateTodo(1)}>Update Todo</button>
+      {mutation.isLoading && <div>Updating todo...</div>}
+      {mutation.isError && <div>An error occurred: {mutation.error.message}</div>}
+    </div>
+  );
+}
+
+export default UpdateTodo;
+```
+
+<br /><br />
+
 4. 다른 컴포넌트에서 MyComponent를 가져와서 렌더링 한다.
 ```jsx
 /* AnotherComponent.js */
