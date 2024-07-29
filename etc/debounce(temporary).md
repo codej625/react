@@ -5,10 +5,7 @@
 * 예시
 ---
 
-```jsx
-import { useState, useEffect } from 'react'
-import './App.css'
-
+```javascript
 const searchUsers = (name) => {
   // 서버에서 응답받은 데이터라 가정
   const users = [
@@ -28,8 +25,12 @@ const searchUsers = (name) => {
     users.filter(user => user.name.startsWith(name))
   );
 }
+```
 
-function App() {
+```jsx
+import { useState, useEffect } from 'react'
+
+export default function Debounce() {
 
   // input 값을 담고 보여주기 위한 useState()
   const [input, setInput] = useState('');
@@ -72,6 +73,4 @@ function App() {
     </>
   )
 }
-
-export default App
 ```
