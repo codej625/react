@@ -33,14 +33,58 @@ API 요청 결과를 캐싱하여 관리한다.
 <br />
 
 1. Install.
+```node
+npm i @tanstack/react-query
+# or
+pnpm add @tanstack/react-query
+# or
+yarn add @tanstack/react-query
+# or
+bun add @tanstack/react-query
 ```
-$ npm install @tanstack/react-query /* React Query */
-$ npm install @react-devtools/inspector /* Devtools */
 
-or
+<br />
 
-$ yarn add @tanstack/react-query
-$ yarn add @react-devtools/inspector
+```node
+npm i -D @tanstack/eslint-plugin-query
+# or
+pnpm add -D @tanstack/eslint-plugin-query
+# or
+yarn add -D @tanstack/eslint-plugin-query
+# or
+bun add -D @tanstack/eslint-plugin-query
+```
+
+<br />
+
+```
+ESLint 설정 파일(일반적으로 .eslintrc.json, .eslintrc.js, 또는 .eslintrc.yaml)을 열어 플러그인을 추가한다.
+다음은 .eslintrc.json 파일을 사용하는 예시이다.
+```
+```json
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@tanstack/query/recommended"
+  ],
+  "plugins": [
+    "@tanstack/query"
+  ],
+  "rules": {
+    // 추가적인 규칙 설정
+  }
+}
+```
+```
+"extends": @tanstack/query/recommended를 추가하여 TanStack의 추천 ESLint 규칙을 사용한다.
+
+"plugins": ESLint에 @tanstack/query 플러그인을 사용하도록 설정.
+```
+```json
+"rules": {
+  "@tanstack/query/require-query-key": "warn", // 예: query key가 필요하다는 경고
+  "@tanstack/query/consistent-query-hooks": "error" // 예: 일관된 query hook 사용 강제
+}
 ```
 
 <br /><br />
