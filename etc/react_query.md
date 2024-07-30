@@ -133,9 +133,7 @@ QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에�
 /* MyComponent.js */
 
 import React from 'react';
-import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
-
-const queryClient = new QueryClient();
+import { useQuery } from 'react-query';
 
 async function fetchData() {
   const response = await fetch('https://api.example.com/data');
