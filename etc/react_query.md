@@ -95,8 +95,6 @@ ESLint 설정 파일(일반적으로 .eslintrc.json, .eslintrc.js, 또는 .eslin
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-/*
 import {
   useQuery,
   useMutation,
@@ -104,7 +102,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-*/
 import { ReactQueryDevtools } from '@react-devtools/inspector'; /* React Query Devtools */
 import App from './App';
 
@@ -119,6 +116,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 );
 ```
+
 ```
 * Tip
 
@@ -135,18 +133,25 @@ QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에�
 /* MyComponent.js */
 
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 async function fetchData() {
   const response = await fetch('https://api.example.com/data');
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
+
   return response.json();
 }
 
 function MyComponent() {
-  const { data, isLoading, error } = useQuery('data', fetchData);
+  const { data, isLoading, error } = useQuery({
+    queryKey: 'data',
+    queryFn: fetchData,
+  });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -163,7 +168,15 @@ function MyComponent() {
   );
 }
 
-export default MyComponent;
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MyComponent />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
 ```
 
 <br /><br />
@@ -172,18 +185,23 @@ export default MyComponent;
 
 ```jsx
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchTodos = async () => {
   const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
+
   return response.json();
 };
 
 function Todos() {
-  const { data, error, isLoading } = useQuery('todos', fetchTodos);
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['todos'],
+    queryFn: fetchTodos,
+  });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occurred: {error.message}</div>;
@@ -206,7 +224,7 @@ export default Todos;
 
 ```jsx
 import React from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addTodo = async (newTodo) => {
   const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
@@ -216,17 +234,20 @@ const addTodo = async (newTodo) => {
     },
     body: JSON.stringify(newTodo),
   });
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
+
   return response.json();
 };
 
 function AddTodo() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(addTodo, {
+  const mutation = useMutation({
+    mutationFn: addTodo,
     onSuccess: () => {
-      queryClient.invalidateQueries('todos');
+      queryClient.invalidateQueries(['todos']);
     },
   });
 
@@ -253,7 +274,7 @@ export default AddTodo;
 
 ```jsx
 import React from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const updateTodo = async (updatedTodo) => {
   const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${updatedTodo.id}`, {
@@ -263,17 +284,20 @@ const updateTodo = async (updatedTodo) => {
     },
     body: JSON.stringify(updatedTodo),
   });
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
+
   return response.json();
 };
 
 function UpdateTodo() {
   const queryClient = useQueryClient();
-  const mutation = useMutation(updateTodo, {
+  const mutation = useMutation({
+    mutationFn: updateTodo,
     onSuccess: () => {
-      queryClient.invalidateQueries('todos');
+      queryClient.invalidateQueries(['todos']);
     },
   });
 
