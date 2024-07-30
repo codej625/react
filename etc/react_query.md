@@ -96,6 +96,15 @@ ESLint 설정 파일(일반적으로 .eslintrc.json, .eslintrc.js, 또는 .eslin
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+/*
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+*/
 import { ReactQueryDevtools } from '@react-devtools/inspector'; /* React Query Devtools */
 import App from './App';
 
