@@ -74,3 +74,75 @@ export default function Debounce() {
   )
 }
 ```
+
+<br /><br /><br />
+
+* API 버전
+---
+
+```jsx
+import { useState, useEffect } from 'react';
+import './App.css';
+
+const fetchTodos = async () => {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    if (!response.ok) {
+      throw new Error("Network error");
+    }
+    return response.json();
+  } 
+  catch(err) { 
+    console.error('Error message -> ', err); 
+    return []; // 네트워크 에러 시 빈 배열 반환
+  }
+};
+
+const todoCheck = async (inputCheck, todoList) => {
+  return (!inputCheck) ? [] : todoList.filter(todo => todo.title.startsWith(inputCheck));
+}
+
+export default function App() {
+  const [input, setInput] = useState('');
+  const [search, setSearch] = useState([]);
+
+  useEffect(() => {
+    const timerId = setTimeout(async () => {
+      try {
+        const result = await fetchTodos();
+        const filteredTodos = await todoCheck(input, result);
+        setSearch(filteredTodos);
+      } 
+      catch (err) {
+        console.error('Error fetching message -> ', err);
+        setSearch([]);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timerId);
+  }, [input]);
+
+  return (
+    <>
+      <input 
+        type="text" 
+        name="search-users" 
+        id="search-users"
+        className='search-users'
+        value={input}
+        onChange={e => setInput(e.target.value)}
+      />
+
+      <ul>
+        {search.length === 0 ? (
+          <li>검색 결과가 없습니다.</li>
+        ) : (
+          search.map(todo => (
+            <li key={todo.id} className='todo-list'>{todo.title}</li>
+          ))
+        )}
+      </ul>
+    </>
+  )
+}
+```
