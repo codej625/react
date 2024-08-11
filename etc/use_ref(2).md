@@ -65,7 +65,7 @@ export default function UserList({ users }) {
 }
 ```
 
-<br />
+<br /><br />
 
 ```
 이제 App 에서 useRef() 를 사용하여 nextId 라는 변수를 만들어보자.
