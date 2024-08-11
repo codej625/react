@@ -81,30 +81,31 @@ App.js
 import React, { useRef, useState } from 'react';
 import UserList from './UserList';
 
-const [users, setUsers] = useState([
-  {
-    id: 1,
-    username: 'velopert',
-    email: 'public.velopert@gmail.com'
-  },
-  {
-    id: 2,
-    username: 'tester',
-    email: 'tester@example.com'
-  },
-  {
-    id: 3,
-    username: 'liz',
-    email: 'liz@example.com'
-  }
-]);
 
 export default function App() {
 
-  // 기존 사용자 목록에서 가장 큰 id를 찾아서 그 값에 1을 더하여 새로운 id 생성
-  const nextId = useRef(Math.max(...users.map(user => user.id)) + 1);
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      username: 'velopert',
+      email: 'public.velopert@gmail.com'
+    },
+    {
+      id: 2,
+      username: 'tester',
+      email: 'tester@example.com'
+    },
+    {
+      id: 3,
+      username: 'liz',
+      email: 'liz@example.com'
+    }
+  ]);
   const [username, setUsername] = useState(''); // 입력된 사용자 이름을 저장할 상태
   const [email, setEmail] = useState(''); // 입력된 이메일을 저장할 상태
+
+  // 기존 사용자 목록에서 가장 큰 id를 찾아서 그 값에 1을 더하여 새로운 id 생성
+  const nextId = useRef(Math.max(...users.map(user => user.id)) + 1);
 
   const onCreate = () => {
     const newUser = {
