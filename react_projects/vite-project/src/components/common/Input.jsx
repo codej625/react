@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect } from 'react';
 
-const Input = forwardRef(({ className, type, value, checked, onChange, placeholder, readOnly, todos }, ref) => {
+const Input = forwardRef(({ className, type, value, checked, onChange, placeholder, readOnly, todos, disabled }, ref) => {
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -18,6 +18,7 @@ const Input = forwardRef(({ className, type, value, checked, onChange, placehold
       onChange={onChange}
       placeholder={placeholder}
       readOnly={readOnly}
+      disabled={disabled}
     />
   );
 });

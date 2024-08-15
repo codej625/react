@@ -73,6 +73,7 @@ function TodoList() {
                       type={"text"} 
                       value={todo.text}
                       readOnly={true}
+                      disabled={false}
                     />
                     <Button
                       className={"add-design-button margin-right-1"}

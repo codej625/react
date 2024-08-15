@@ -1,7 +1,8 @@
 import TodoList from '@components/pages/TodoList';
+import React, { useState } from 'react';
 
-function Main() {
-
+export default function Main() {
+  
   return (
     <main>
       <section>
@@ -14,5 +15,3 @@ function Main() {
   );
   
 }
-
-export default Main;
