@@ -1,6 +1,6 @@
-# useState()의 변수를 업데이트 할 때 중복제거
+# useState()를 사용하여 업데이트 할 때 중복제거
 
-<br />
+<br /><br />
 
 ```javascript
 import React, { useState } from 'react';

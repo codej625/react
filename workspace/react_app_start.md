@@ -1,22 +1,31 @@
-# react app을 만들어보자!
+# React 프로젝트 생성
 
-1. create react app
+<br /><br />
+
+1. React 프로젝트 만들기
+
+<br />
+
+||CRA|Vite|
+|-|---|---|
+|프로젝트 생성|npx create-react-app {project_name}|npm create vite@latest|
+
+<br />
+
 ```
-npx create-react-app {project name}
+* CRA로 리액트 프로젝트 생성 시,
+밑에 명령어로 CRA 최신버전으로 업그레이드 할 수 있다.
+
+npm install react-scripts@latest
 ```
 
-2. react project start
+<br /><br /><br />
 
-### yarn을 사용시
-```
-yarn start
-```
-### npm을 사용시
-```
-npm start
-``` 
+2. React 프로젝트 시작하기
 
-3. 브라우저에서 확인하기
-```
-브라우저에 http://localhost:3000 을 입력하고 프로젝트가 정상적으로 실행되는지 확인한다.
-```
+<br />
+
+||CRA|Vite|
+|-|---|---|
+|경로 이동|cd {project_name}|cd {project_name}|
+|서버 실행|npm start|npm run dev|
