@@ -1,16 +1,23 @@
 # useState의 조건을 넣어보자.
 
-<br />
+<br /><br />
 
 ```
-useState는 상태 값을 업데이트할 때 함수를 통해 이전 상태 값을 받아 새로운 상태 값을 반환하는 방식으로 작동한다.
-즉, 콜백 함수로 값을 설정할 때도 같은 개념이 적용된다.
+useState는 상태 값을 업데이트할 때 Setter 역할을 하는 함수를 통해
+이전 상태 값을 받아 새로운 상태 값을 반환하는 방식으로 작동한다.
+
+Setter로 사용되는 함수의 첫 번째 파라미터는 현재의 상태를 반환한다.
 ```
 
-```javascript
+<br /><br /><br />
+
+* 예시
+---
+
+```jsx
 const [time, setTime] = useState(0);
 
-setTime(prevTime => {
+setTime(prevTime => { // 첫번째 파라미터 현재 상태를 반환한다.
   let newTime;
   if (prevTime >= 12) {
     newTime = 1;
@@ -19,7 +26,4 @@ setTime(prevTime => {
   }
   setTime(newTime);
 };
-```
-```
-예를 들면 위와 같이 조건을 넣을 수도 있다.
 ```
