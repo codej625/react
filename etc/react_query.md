@@ -216,7 +216,7 @@ function Todos() {
 export default Todos;
 ```
 
-<br />
+<br /><br />
 
 3-2. POST 방식 다른 예시
 
@@ -265,8 +265,7 @@ function AddTodo() {
 export default AddTodo;
 ```
 
-<br />
-
+<br /><br />
 
 3-3. PUT 방식(데이터 수정) 예시
 
@@ -313,6 +312,78 @@ function UpdateTodo() {
 }
 
 export default UpdateTodo;
+```
+
+<br /><br />
+
+3-4. 데이터 동기화(데이터가 변경될 때 자동으로 업데이트되도록 하여 사용자 인터페이스를 최신 상태로 유지)
+
+```jsx
+import React from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+const fetchPosts = async () => {
+  const response = await fetch('/api/posts');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+const addPost = async (newPost) => {
+  const response = await fetch('/api/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newPost),
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+function Posts() {
+  const queryClient = useQueryClient();
+
+  // Fetch posts using useQuery
+  const { data: posts, isLoading, error } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
+  });
+
+  // Mutation for adding a new post
+  const mutation = useMutation({
+    mutationFn: addPost,
+    onSuccess: () => {
+      // Invalidate the 'posts' query to refetch data
+      queryClient.invalidateQueries(['posts']);
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const handleAddPost = () => {
+    mutation.mutate({ title: 'New Post', content: 'This is a new post' });
+  };
+
+  return (
+    <div>
+      <button onClick={handleAddPost} disabled={mutation.isLoading}>
+        {mutation.isLoading ? 'Adding...' : 'Add Post'}
+      </button>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}: {post.content}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Posts;
 ```
 
 <br /><br />
