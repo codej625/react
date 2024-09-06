@@ -14,7 +14,8 @@ function Note(props) {
 
   if (note == null) {
     return "Loading";
-  } else {
+  }
+  else {
     return (/* render note here... */);
   }
 }
