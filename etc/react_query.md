@@ -22,7 +22,7 @@ API 요청 결과를 캐싱하여 관리한다.
 서버에 API 요청하여 받아온 결과를 캐싱하며 중복 요청을 최소화할 수 있다.
 
 - 비동기 요청에 대한 상태 핸들링
-비동기 API 요청에 대한 로딩 상태, 결과 값, 에러 상태와 같은 여러가지 상태를 확인하는 기능을 제공한다.
+비동기 API 요청에 대한 로딩 상태,결과 값, 에러 상태와 같은 여러가지 상태를 확인하는 기능을 제공한다.
 ```
 
 <br /><br /><br />
@@ -121,8 +121,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 * Tip
 
 QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에서 동일한 QueryClient 인스턴스를 사용할 수 있다.
+
 이렇게 하면 React Query의 상태를 모든 하위 컴포넌트에서 공유할 수 있으며,
 각 컴포넌트에서 필요한 경우 데이터를 쉽게 가져올 수 있다.
+
 또한 React Query Devtools를 함께 사용하기 위해서도 최상위 컴포넌트에서 QueryClientProvider로 앱을 감싸는 것이 좋다.
 ```
 
@@ -405,4 +407,25 @@ function AnotherComponent() {
 }
 
 export default AnotherComponent;
+```
+
+<br /><br /><br />
+
+* Option
+---
+
+<br />
+
+```
+Queries option
+
+1) enabled: 자동으로 query를 실행할지에 대한 여부
+
+2) retry: query 동작 실패 시, 자동으로 몇번 만큼 retry를 시도할 지 결정
+
+3) select: response 값에서 필요한 값만을 추출할 수 있도록 하는 옵션
+
+4) refetchInterval: 주기적으로 refetch 하는 간격을 설정하는 옵션
+
+5) throwOnError: error boundary를 에러로 전파할 지 결정하는 옵션
 ```
