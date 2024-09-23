@@ -107,6 +107,19 @@ import App from './App';
 
 const queryClient = new QueryClient();
 
+// Default options set
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       staleTime: 1000 * 60,
+//       retry: 1,
+//     },
+//     mutations: {
+//       retry: 1,
+//     },
+//   },
+// });
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -411,13 +424,13 @@ export default AnotherComponent;
 
 <br /><br /><br />
 
-* Option
+* Option, return value
 ---
 
 <br />
 
 ```
-Queries option
+* Queries option
 
 1) enabled: 자동으로 query를 실행할지에 대한 여부
 
@@ -428,4 +441,31 @@ Queries option
 4) refetchInterval: 주기적으로 refetch 하는 간격을 설정하는 옵션
 
 5) throwOnError: error boundary를 에러로 전파할 지 결정하는 옵션
+```
+
+```
+* Queries return value
+
+1) data: 마지막으로 resolved된 데이터
+
+2) error: 에러가 발생했을 때 반환하는 에러 객체
+
+3) isLoading: 최초 fetch가 in-flight 상태일 때 ture 값을 반환
+
+4) isFetching: fetch가 실핼될 때마다 true 값을 반환
+```
+
+<br /><br />
+
+```
+* Mutation option
+
+1) onMutate: mutate 함수가 실행되기 전에 실행되는 함수
+(optimistic update에 유용 예 -> 좋아요 기능 같은)
+```
+
+```
+* Mutation return value
+
+1) mutate: mutation 함수를 실행시키는 함수
 ```
