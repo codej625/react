@@ -8,7 +8,7 @@ React에서 useRef는 HTML 엘리먼트의 직접 접근하기 위해서 사용�
 React 16.3에서 소개된 forwardRef가 등장하기 전까지는 컴포넌트의 ref를 Prop으로 받는 게 불가능했다.
 forwardRef의 등장으로 ref를 Prop으로 받을 수 있게 된 것이다.
 
-그럼 forwardRef를 사용하여 ref를 Prop으로 받아 엘리먼트에 접근하는 방법을 배워보자.
+그럼 forwardRef를 사용하여 ref를 Prop으로 받아 엘리먼트에 접근하는 방법을 배워보자.
 ```
 
 <br /><br />

@@ -22,7 +22,7 @@ API 요청 결과를 캐싱하여 관리한다.
 서버에 API 요청하여 받아온 결과를 캐싱하며 중복 요청을 최소화할 수 있다.
 
 - 비동기 요청에 대한 상태 핸들링
-비동기 API 요청에 대한 로딩 상태, 결과 값, 에러 상태와 같은 여러가지 상태를 확인하는 기능을 제공한다.
+비동기 API 요청에 대한 로딩 상태,결과 값, 에러 상태와 같은 여러가지 상태를 확인하는 기능을 제공한다.
 ```
 
 <br /><br /><br />
@@ -107,6 +107,19 @@ import App from './App';
 
 const queryClient = new QueryClient();
 
+// Default options set
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       staleTime: 1000 * 60,
+//       retry: 1,
+//     },
+//     mutations: {
+//       retry: 1,
+//     },
+//   },
+// });
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -121,8 +134,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 * Tip
 
 QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에서 동일한 QueryClient 인스턴스를 사용할 수 있다.
+
 이렇게 하면 React Query의 상태를 모든 하위 컴포넌트에서 공유할 수 있으며,
 각 컴포넌트에서 필요한 경우 데이터를 쉽게 가져올 수 있다.
+
 또한 React Query Devtools를 함께 사용하기 위해서도 최상위 컴포넌트에서 QueryClientProvider로 앱을 감싸는 것이 좋다.
 ```
 
@@ -216,7 +231,7 @@ function Todos() {
 export default Todos;
 ```
 
-<br />
+<br /><br />
 
 3-2. POST 방식 다른 예시
 
@@ -265,8 +280,7 @@ function AddTodo() {
 export default AddTodo;
 ```
 
-<br />
-
+<br /><br />
 
 3-3. PUT 방식(데이터 수정) 예시
 
@@ -317,6 +331,78 @@ export default UpdateTodo;
 
 <br /><br />
 
+3-4. 데이터 동기화(데이터가 변경될 때 자동으로 업데이트되도록 하여 사용자 인터페이스를 최신 상태로 유지)
+
+```jsx
+import React from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+const fetchPosts = async () => {
+  const response = await fetch('/api/posts');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+const addPost = async (newPost) => {
+  const response = await fetch('/api/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newPost),
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
+};
+
+function Posts() {
+  const queryClient = useQueryClient();
+
+  // Fetch posts using useQuery
+  const { data: posts, isLoading, error } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
+  });
+
+  // Mutation for adding a new post
+  const mutation = useMutation({
+    mutationFn: addPost,
+    onSuccess: () => {
+      // Invalidate the 'posts' query to refetch data
+      queryClient.invalidateQueries(['posts']);
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const handleAddPost = () => {
+    mutation.mutate({ title: 'New Post', content: 'This is a new post' });
+  };
+
+  return (
+    <div>
+      <button onClick={handleAddPost} disabled={mutation.isLoading}>
+        {mutation.isLoading ? 'Adding...' : 'Add Post'}
+      </button>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}: {post.content}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Posts;
+```
+
+<br /><br />
+
 4. 다른 컴포넌트에서 MyComponent를 가져와서 렌더링 한다.
 ```jsx
 /* AnotherComponent.js */
@@ -334,4 +420,52 @@ function AnotherComponent() {
 }
 
 export default AnotherComponent;
+```
+
+<br /><br /><br />
+
+* Option, return value
+---
+
+<br />
+
+```
+* Queries option
+
+1) enabled: 자동으로 query를 실행할지에 대한 여부
+
+2) retry: query 동작 실패 시, 자동으로 몇번 만큼 retry를 시도할 지 결정
+
+3) select: response 값에서 필요한 값만을 추출할 수 있도록 하는 옵션
+
+4) refetchInterval: 주기적으로 refetch 하는 간격을 설정하는 옵션
+
+5) throwOnError: error boundary를 에러로 전파할 지 결정하는 옵션
+```
+
+```
+* Queries return value
+
+1) data: 마지막으로 resolved된 데이터
+
+2) error: 에러가 발생했을 때 반환하는 에러 객체
+
+3) isLoading: 최초 fetch가 in-flight 상태일 때 ture 값을 반환
+
+4) isFetching: fetch가 실핼될 때마다 true 값을 반환
+```
+
+<br /><br />
+
+```
+* Mutation option
+
+1) onMutate: mutate 함수가 실행되기 전에 실행되는 함수
+(optimistic update에 유용 예 -> 좋아요 기능 같은)
+```
+
+```
+* Mutation return value
+
+1) mutate: mutation 함수를 실행시키는 함수
 ```
