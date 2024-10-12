@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Ref() {
   const ref = useRef(0);
@@ -8,6 +8,11 @@ export default function Ref() {
     ref.current += 1;
     setState(ref.current);
   };
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
 
   return (
     <>
