@@ -9,6 +9,7 @@ export default defineConfig({
       { find: "@components", replacement: "/src/components" },
       { find: "@script", replacement: "/src/script" },
       { find: "@assets", replacement: "/src/assets" },
+      { find: "@store", replacement: "/src/store" },
       { find: "@", replacement: "/src" },
     ],
   },

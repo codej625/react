@@ -4,6 +4,7 @@ import Wrap from '@components/layout/Wrap';
 import RouterTest from '@components/pages/RouterTest';
 import Ref from '@components/pages/Ref';
 import InputTest from '@components/pages/InputTest';
+import StoreTest from '@components/pages/StoreTest';
 import '@assets/styles/common.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/router" element={<RouterTest />} />
           <Route path="/ref" element={<Ref />} />
           <Route path="/input" element={<InputTest />} />
+          <Route path="/store" element={<StoreTest />} />
         </Routes>
       </BrowserRouter>
     </>
