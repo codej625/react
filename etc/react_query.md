@@ -168,7 +168,7 @@ async function fetchData() {
 
 function MyComponent() {
   const { data, isLoading, error } = useQuery({
-    queryKey: 'data',
+    queryKey: ['data'],
     queryFn: fetchData,
   });
 
