@@ -5,6 +5,7 @@ import RouterTest from '@components/pages/RouterTest';
 import Ref from '@components/pages/Ref';
 import InputTest from '@components/pages/InputTest';
 import StoreTest from '@components/pages/StoreTest';
+import ReactQuery from '@components/pages/ReactQuery';
 import '@assets/styles/common.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/ref" element={<Ref />} />
           <Route path="/input" element={<InputTest />} />
           <Route path="/store" element={<StoreTest />} />
+          <Route path="/react-query" element={<ReactQuery />} />
         </Routes>
       </BrowserRouter>
     </>
