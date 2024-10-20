@@ -108,7 +108,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@react-devtools/inspector'; /* React Query Devtools */
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; /* React Query Devtools */
 import App from './App';
 
 const queryClient = new QueryClient();
@@ -154,7 +154,7 @@ QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에�
 /* MyComponent.js */
 
 import React from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 async function fetchData() {
   const response = await fetch('https://api.example.com/data');
