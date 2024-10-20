@@ -46,6 +46,12 @@ bun add @tanstack/react-query
 <br />
 
 ```node
+npm install @tanstack/react-query-devtools // devtools
+```
+
+<br />
+
+```node
 npm i -D @tanstack/eslint-plugin-query
 # or
 pnpm add -D @tanstack/eslint-plugin-query
