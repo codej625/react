@@ -7,6 +7,7 @@ import InputTest from '@components/pages/InputTest';
 import StoreTest from '@components/pages/StoreTest';
 import ReactQuery from '@components/pages/ReactQuery';
 import UseEffect from '@components/pages/UseEffect';
+import Test from '@components/pages/Test';
 import '@assets/styles/common.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/store" element={<StoreTest />} />
           <Route path="/react-query" element={<ReactQuery />} />
           <Route path="/useeffect" element={<UseEffect />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </>
