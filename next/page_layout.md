@@ -117,6 +117,7 @@ export default function BlogLayout({
 }) {
   return <section>{children}</section>
 }
+
 ```
 
 ```
@@ -126,19 +127,6 @@ app/
 ├── layout.tsx        // 루트 레이아웃
 ├── page.tsx          // 루트(Index) 페이지
 └── blog/
-    ├── layout.tsx    // 블로그 레이아웃
-    ├── page.tsx      // 블로그 페이지
-    └── [slug]/       // 동적 라우트 세그먼트
-        └── page.tsx  // 개별 블로그 포스트 페이지
-```
-
-```
-// 접속 경로
-
-app/
-├── page.tsx          // "/" 루트 경로
-├── blog/
-│   ├── page.tsx      // "/blog" 경로
-│   └── [slug]/       // 동적 라우트 세그먼트
-│       └── page.tsx  // "/blog/1", "/blog/2" 등
+    ├── layout.tsx    // 블로그 레이아웃 (레이아웃별로 독립적인 상태 관리 가능)
+    └── page.tsx      // 블로그 페이지
 ```
