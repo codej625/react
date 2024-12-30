@@ -28,8 +28,6 @@ Next.js는 파일 시스템 기반 라우팅을 사용한다.
 2) React 컴포넌트를 default export
 ```
 
-<br />
-
 ```ts
 // app/page.tsx
 
@@ -60,8 +58,6 @@ export default function Page() {
 2) children prop을 받는 React 컴포넌트를 default export
 (children은 페이지나 다른 레이아웃이 될 수 있음)
 ```
-
-<br />
 
 ```ts
 // app/layout.tsx
@@ -103,8 +99,6 @@ export default function DashboardLayout({
 2) 상위 레이아웃이 하위 레이아웃을 children prop으로 감싸는 구조
 3) 특정 라우트 세그먼트(폴더)에 layout 파일을 추가하여 생성
 ```
-
-<br />
 
 ```ts
 // app/blog/layout.tsx
