@@ -44,7 +44,7 @@ pages/
 2. 동적 라우트 (Dynamic routes)
 
 ```
-파일 이름을 대괄호로 감싸면 ([slug])
+파일 이름을 대괄호로 감싸면 [slug]
 동적 라우트 세그먼트가 생성된다.
 (데이터를 기반으로 여러 페이지를 생성할 때 유용)
 
@@ -61,4 +61,31 @@ pages/
 ├── blog/
 │   ├── index.tsx   // "/blog" 경로
 │   ├── [slug].tsx  // "/blog/1" 경로
+```
+
+<br />
+<br />
+<br />
+
+3. 동적 라우트 심화
+
+```
+예시로 /blog/[slug]/[slug]/[slug] 와 같은
+경로의 요청이 온다면 어떻게 해야할까?
+
+이런 요청을 대응하기 위해 Next에서는
+Catch-all Segments 라는 개념이 존재한다.
+
+파일 이름을 대괄호로 감싸고 ...을 붙여준다.
+예시 [...slug]
+```
+
+```
+// 예시
+
+pages/
+├── index.tsx       // "/" 루트 경로
+├── blog/
+│   ├── index.tsx   // "/blog" 경로
+│   ├── [...slug].tsx  // "/blog/[...slug]/[...slug]/[...slug]" 모든 경로
 ```
