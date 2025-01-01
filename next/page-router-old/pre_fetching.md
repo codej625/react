@@ -74,3 +74,25 @@ function Home() {
  
 export default Home
 ```
+
+<br />
+<br />
+<br />
+
+3. 프리패칭이 해제
+
+```
+잘 사용되지 않는 페이지에 프리패칭을
+해체하려면 prefetch={false} 이러한 옵션을 추가한다.
+```
+
+```ts
+// 예시
+
+<Link
+  href="/blog/hello-world"
+  prefetch={false}
+>
+  Blog Post
+</Link>
+```
