@@ -8,7 +8,7 @@
 
 ```
 Next에서는 기본적으로 SSR을 지원하고,
-Pre-Rendering과 Fetching을 통해 빠른 TTI를 달성한다.
+Pre-Rendering과 Fetching을 통해 빠른 FCP를 달성한다.
 ```
 
 <br />
