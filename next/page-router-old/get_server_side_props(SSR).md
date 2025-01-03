@@ -30,7 +30,7 @@ import { BookData } from '@/types';
 
 export default async function fetchBooks(query?: string): Promise<BookData[]> {
   // 환경변수 사용
-  let url = process.env.NEXT_PUBLIC_API_KEY_1 as string;
+  let url = process.env.NEXT_PUBLIC_API_URL_1 as string;
 
   if (query) url += `/search?q=${query}`;
 
@@ -53,7 +53,7 @@ export default async function fetchBooks(query?: string): Promise<BookData[]> {
 import { BookData } from '@/types';
 
 export default async function fetchRandomBooks(): Promise<BookData[]> {
-  const url: string = process.env.NEXT_PUBLIC_API_KEY_2 as string;
+  const url: string = process.env.NEXT_PUBLIC_API_URL_2 as string;
 
   try {
     const res = await fetch(url);
