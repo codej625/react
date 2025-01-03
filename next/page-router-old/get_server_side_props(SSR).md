@@ -70,7 +70,7 @@ export default async function fetchRandomBooks(): Promise<BookData[]> {
 ```
 
 ```tsx
-// Index.tsx
+// index.tsx
 
 // 컴포넌트보다 먼저 실행 되어, 컴포넌트에 필요한 데이터를 가져오는 내장 함수 (이름 변경 X)
 export const getServerSideProps = async() => {
