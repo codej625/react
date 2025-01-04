@@ -1,12 +1,12 @@
-import Link from "next/link";
-import type { BookData } from "@/types";
-import style from "./book-item.module.css";
+import Link from 'next/link';
+import type { BookData } from '@/types';
+import style from './book-item.module.css';
 
 export default function BookItem({
   id,
   title,
   subTitle,
-  description,
+  // description,
   author,
   publisher,
   coverImgUrl,
