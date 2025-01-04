@@ -64,6 +64,6 @@ export default function Home({ allBooks, randomBooks }: InferGetStaticPropsType<
 ```
 
 ```
-앱을 빌드하고 프로덕션 모드로 실행한 다음
+앱을 빌드하고 프로덕션 모드로 실행한 다음,
 새로 고침을 여러 번 눌러보면 업데이트된 데이터로 변경된 페이지 모습을 확인할 수 있다.
 ```
