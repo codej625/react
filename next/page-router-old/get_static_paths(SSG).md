@@ -20,6 +20,7 @@ id라는 파라미터를 사용한 로직이 존재할 시,
 
 물론 경로가 업데이트되면 새로운 경로에 대한 대응은 안 되고,
 fallback이라는 옵션을 미리 설정해놓고 대응할 수 있다.
+(fallback 옵션은 밑에서 설명)
 ```
 
 <br />
@@ -51,14 +52,30 @@ export const getStaticPaths = () => {
 };
 ```
 
+|fallback option|false (Default)|blocking|true|
+|-|-|-|-|
+|기능|설정된 요청이 없다면 404 페이지 리턴|설정된 요청이 없다면 추후 페이지를 빌드 하여 SSG로 작동|데이터가 없는 HTML 즉시 응답|
+|특징|404 페이지 리턴|SSR로 작동 후 빌드 완료 시 SSG로 작동|Props(Data)가 없는 버전의 HTML을 즉시 응답하고 (빠른 FCP), 추후 데이터를 보내 렌더링|
+|단점|설정되지 않은 경로에 대한 대응 불가|패칭 작업 동안 화면에 로딩 발생 (느린 FCP)|데이터가 없는 HTML을 먼저 반환하기에 적절한 대처가 필요|
+
+<br />
+
 ```tsx
 // [id].tsx
 
 // SSG 설정을 위해 getStaticProps() 함수를 사용
 export const getStaticProps = async (context: GetStaticPropsContext) => {
+
   // getStaticProps()의 context에는 기본적으로 param이 없기 때문에 "!" 단언 연산자를 사용한다.
   const id = context.params!.id;
   const book = await fetchOneBooks(Number(id));
+
+  // 404 페이지 리다이렉트 옵션
+  // if (!book) {
+  //   return {
+  //     nofFount: true,
+  //   };
+  // }
 
   return {
     props: { book },
@@ -70,6 +87,17 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 // [id].tsx
 
 export default function Page({ book }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // fallback 상태 체크
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <div>
+        <p>...로딩중 입니다.</p>
+      </div>
+    );
+  }
+
   if (!book) {
     return (
       <div>
@@ -111,17 +139,25 @@ export const getStaticPaths = () => {
       { params: { id: '3' } }
     ],
     // 설정한 경로 외에 값이 들어오면 어떻게 할 건지에 대한 옵션 Default 값은 false
-    fallback: false,
+    fallback: ture,
   };
 };
 
 // 2)
 // SSG 설정을 위해 getStaticProps() 함수를 사용
 export const getStaticProps = async (context: GetStaticPropsContext) => {
+
   // getStaticProps()의 context에는 기본적으로 param이 없기 때문에 "!" 단언 연산자를 사용한다.
   const id = context.params!.id;
   const book = await fetchOneBooks(Number(id));
 
+  // 404 페이지 리다이렉트 옵션
+  // if (!book) {
+  //   return {
+  //     nofFount: true,
+  //   };
+  // }
+  
   return {
     props: { book },
   };
@@ -129,6 +165,17 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
 // 3)
 export default function Page({ book }: InferGetStaticPropsType<typeof getStaticProps>) {
+  // fallback 상태 체크
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <div>
+        <p>...로딩중 입니다.</p>
+      </div>
+    );
+  }
+
   if (!book) {
     return (
       <div>
