@@ -87,7 +87,7 @@ pages/
 ├── index.tsx          // "/" 루트 경로
 ├── blog/
 │   ├── index.tsx      // "/blog" 경로
-│   ├── [...slug].tsx  // "/blog/[...slug]/[...slug]/[...slug]" 등의 모든 경로
+│   ├── [...slug].tsx  // "/blog/[slug]/[slug]/[slug]" 등의 모든 경로
 ```
 
 <br />
@@ -115,5 +115,5 @@ pages/
 ├── index.tsx       // "/" 루트 경로
 ├── blog/
 │   ├── index.tsx(파일 생성 X)
-│   ├── [[...slug]].tsx  // "/blog" or "/blog/[...slug]/[...slug]/[...slug]" 등의 모든 경로
+│   ├── [[...slug]].tsx  // "/blog" or "/blog/[slug]/[slug]/[slug]" 등의 모든 경로
 ```
