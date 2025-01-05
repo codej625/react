@@ -82,3 +82,60 @@ app/
 │   └── [slug]/       // 동적 세그먼트
 │       └── page.tsx  // "/blog/1", "/blog/2" 등
 ```
+
+<br />
+<br />
+<br />
+
+2. 동적 라우트 심화(Catch-all segments)
+
+```
+예시로 /blog/[slug]/[slug]/[slug] 와 같은
+경로의 요청이 온다면 어떻게 해야할까?
+
+이런 요청을 대응하기 위해 Next에서는
+Catch-all segments 라는 개념이 존재한다.
+
+폴더 이름을 대괄호로 감싸고 ...을 붙여주고 그 밑에 page 파일을 만들어준다.
+예시 [...slug]/page
+```
+
+```
+// 예시
+
+app/
+├── page.tsx          // "/" 루트 경로
+├── blog/
+│   ├── page.tsx      // "/blog" 경로
+│   └── [...slug]/    // 동적 세그먼트
+│       └── page.tsx  // "/blog/[slug]/[slug]/[slug]" 등의 모든 경로
+```
+
+<br />
+<br />
+<br />
+
+3. 동적 라우트 심화(Optional + Catch-all segments)
+
+```
+Catch-all segments는 모든 경로의 요청을 받아들이지만
+정작 /blog 경로 자체는 대응하지 못한다.
+
+blog에 관련된 모든 경로에 대응하게 만들려면
+Optional catch-all segments 을 사용하면 된다.
+
+파일 이름을 대괄호로 두 번 감싸고 ...을 붙여주고 그 밑에 page 파일을 만들어준다.
+예시 [[...slug]]/page
+```
+
+```
+// 예시
+
+app/
+├── page.tsx             // "/" 루트 경로
+├── blog/
+│   ├── page.tsx         // "/blog" 경로
+│   └── [[...slug]].tsx  // 동적 세그먼트
+│       └── page.tsx     // "/blog" or "/blog/[slug]/[slug]/[slug]" 등의 모든 경로
+```
+
