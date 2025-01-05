@@ -67,7 +67,7 @@ pages/
 <br />
 <br />
 
-3. 동적 라우트 심화(
+3. 동적 라우트 심화(Catch-all segments)
 
 ```
 예시로 /blog/[slug]/[slug]/[slug] 와 같은
