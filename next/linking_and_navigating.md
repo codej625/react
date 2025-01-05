@@ -30,7 +30,7 @@ Next.js의 <Link> 컴포넌트는 HTML의 <a> 태그를 확장하여,
 등이 있다.
 ```
 
-```ts
+```tsx
 // 기본 사용
 
 import Link from 'next/link';
@@ -51,7 +51,7 @@ export default function Page() {
 템플릿 리터럴을 사용하여 동적으로 경로를 생성할 수 있다.
 ```
 
-```ts
+```tsx
 
 interface Post {
   id: number;
@@ -83,7 +83,7 @@ export default function PostList({ posts }: { posts: Post[] }) {
 활성화된 링크에 클래스를 추가할 수 있다.
 ```
 
-```ts
+```tsx
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -116,7 +116,7 @@ href에 해시(#)를 추가하여,
 페이지 내 특정 ID로 스크롤할 수 있다.
 ```
 
-```ts
+```tsx
 <Link href="/dashboard#settings">
   Settings
 </Link>
@@ -137,7 +137,7 @@ href 속성은 링크의 대상 URL을 지정한다.
 (필수 속성)
 ```
 
-```ts
+```tsx
 <Link href="/about">
   About
 </Link>
@@ -154,7 +154,7 @@ replace 속성은 URL을 변경할 때,
 (기본값은 false)
 ```
 
-```ts
+```tsx
 <Link href="/dashboard" replace>
   Dashboard
 </Link>
@@ -170,7 +170,7 @@ scroll 속성은 페이지 전환 후 스크롤 위치를 어떻게 처리할지
 기본값은 true이며, 새 페이지가 보이지 않으면 자동으로 페이지 상단으로 스크롤된다.
 ```
 
-```ts
+```tsx
 <Link href="/dashboard" scroll={false}>
   Dashboard
 </Link>
@@ -194,7 +194,7 @@ Next.js는 정적 라우트에 대해 전체 페이지를 미리 로드하고,
 3) null 기본 동작 (정적 라우트는 전체 로드, 동적 라우트는 필요한 부분만 로드)
 ```
 
-```ts
+```tsx
 <Link href="/dashboard" prefetch={false}>
   Dashboard
 </Link>
