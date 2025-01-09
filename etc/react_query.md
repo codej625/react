@@ -212,20 +212,22 @@ fetchStatus === 'idle'     // 쿼리가 현재 아무 작업도 하지 않는 �
 ```
 
 ```
-// staleTime
+// 자주 사용되는 옵션
 
-1) staleTime의 값을 설정해주지 않으면 기본값은 0
-(data를 fetch 해오자마자 data를 신선하지 않다고 간주)
-
-예시) 특정 쿼리 키에 대한 data를 다시 fetch 해와야 하는 상황일 때,
-
-data가 fresh한 상태라면 -> API 호출 없이 캐싱된 data가 다시 사용
-data가 stale한 상태라면 -> API 호출을 통해 신선한 data를 다시 fetch해오고, 이 data를 cache에 저장
+useQuery({
+  queryKey: ['todo', id],
+  queryFn: () => fetchTodoById(id),
+  staleTime: 5000, // 데이터가 'fresh'한 상태로 유지되는 시간
+  cacheTime: 300000, // 캐시된 데이터가 유지되는 시간
+  retry: 3, // 실패 시 재시도 횟수
+  refetchOnWindowFocus: false, // 윈도우 포커스 시 재조회 여부
+  enabled: !!id, // 쿼리 활성화 조건
+})
 ```
 
 <br />
 
-```tsx
+```jsx
 // 쿼리 키는 가져올 데이터를 고유하게 설명해야 하므로, 이런 식으로도 키설정이 가능
 
 function Todos({ todoId }) {
@@ -234,4 +236,28 @@ function Todos({ todoId }) {
     ...
   })
 }
+```
+
+<br />
+<br />
+<br />
+
+4. 추후 업데이트 사항
+
+```
+1) useMutation - 데이터 변경 작업(CREATE, UPDATE, DELETE)에 사용
+
+2) useInfiniteQuery - 무한 스크롤 구현에 사용
+
+3) useQueryClient - QueryClient 인스턴스에 직접 접근할 때 사용
+```
+
+```
+// Select options
+
+const { data: todoTitles } = useQuery({
+  queryKey: ['todos'],
+  queryFn: fetchTodos,
+  select: (data) => data.map(todo => todo.title) // 제목만 추출
+})
 ```
