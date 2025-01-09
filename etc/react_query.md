@@ -1,63 +1,86 @@
 # React의 서버 상태 관리를 위한 라이브러리
 
-<br /><br />
-
-* React query
----
-
+<br />
 <br />
 
+* React query ?
+---
+
 ```
-- 클라이언트 상태와 서버 상태의 분리
-클라이언트에서 사용하는 상태와 서버에서 가져온 상태를 혼합하여 사용할 경우
+// 클라이언트 상태와 / 서버 상태의 분리
+
+클라이언트에서 사용하는 상태와,
+서버에서 가져온 상태를 혼합하여 사용할 경우
 상태 관리와 로직 작성이 복잡해지고 유지보수가 어려워질 수 있는데,
-이러한 경우에 React Query를 사용해 서버 상태를 따로 관리하면 프로젝트 관리가 편해집니다.
-
-- 최신 상태 유지
-쉽게 서버의 최신 상태를 가져오는 기능을 제공한다.
-일정 시간마다 상태를 업데이트하거나 작 특정 동작 이후에 상태를 업데이트할 수 있다.
-
-- 캐싱, 중복 요청 방지
-API 요청 결과를 캐싱하여 관리한다.
-서버에 API 요청하여 받아온 결과를 캐싱하며 중복 요청을 최소화할 수 있다.
-
-- 비동기 요청에 대한 상태 핸들링
-비동기 API 요청에 대한 로딩 상태,결과 값, 에러 상태와 같은 여러가지 상태를 확인하는 기능을 제공한다.
+이럴 때 React Query를 사용하면
+서버 상태를 따로 관리할 수 있어 프로젝트 관리가 편해진다.
 ```
 
-<br /><br /><br />
+```
+// 최신 상태 유지
 
-* Example
----
+서버의 최신 상태를 가져오는 기능을 제공한다.
+일정 시간마다 상태를 업데이트하거나,
+특정 동작 이후에 상태를 업데이트할 수 있다.
+```
+
+```
+// 캐싱, 중복 요청 방지
+
+API 요청 결과를 캐싱하여 관리한다.
+서버에 API 요청하여 받아온 결과를 캐싱하며,
+중복 요청을 최소화할 수 있다.
+```
+
+```
+// 비동기 요청에 대한 상태 핸들링
+
+비동기 API 요청에 대한 로딩 상태, 결과 값, 에러 상태와 같은
+여러가지 상태를 확인하는 기능을 제공한다.
+```
 
 <br />
+<br />
+<br />
+<br />
 
-1. Install.
-```node
+1. Install
+
+```
+// 리액트 쿼리 설치
+
 npm i @tanstack/react-query
-# or
+
+or
+
 pnpm add @tanstack/react-query
-# or
+
+or
+
 yarn add @tanstack/react-query
-# or
+
+or
+
 bun add @tanstack/react-query
 ```
 
 <br />
 
-```node
-npm install @tanstack/react-query-devtools // devtools
 ```
+// 버그와 불일치를 잡는 데 도움이 되는 ESLint 플러그인 쿼리
 
-<br />
-
-```node
 npm i -D @tanstack/eslint-plugin-query
-# or
+
+or
+
 pnpm add -D @tanstack/eslint-plugin-query
-# or
+
+or
+
 yarn add -D @tanstack/eslint-plugin-query
-# or
+
+or
+
 bun add -D @tanstack/eslint-plugin-query
 ```
 
@@ -65,42 +88,47 @@ bun add -D @tanstack/eslint-plugin-query
 
 ```
 ESLint 설정 파일(일반적으로 .eslintrc.json, .eslintrc.js, 또는 .eslintrc.yaml)을 열어 플러그인을 추가한다.
-다음은 .eslintrc.json 파일을 사용하는 예시이다.
-```
-```json
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:@tanstack/query/recommended"
-  ],
-  "plugins": [
-    "@tanstack/query"
-  ],
-  "rules": {
-    // 추가적인 규칙 설정
-  }
-}
-```
-```
-"extends": @tanstack/query/recommended를 추가하여 TanStack의 추천 ESLint 규칙을 사용한다.
-
-"plugins": ESLint에 @tanstack/query 플러그인을 사용하도록 설정.
-```
-```json
-"rules": {
-  "@tanstack/query/require-query-key": "warn", // 예: query key가 필요하다는 경고
-  "@tanstack/query/consistent-query-hooks": "error" // 예: 일관된 query hook 사용 강제
-}
+다음은 eslint.config.js 파일을 사용하는 예시
 ```
 
-<br /><br />
+```js
+// 추천 설정 플러그인의 모든 권장 규칙을 활성화
 
-2. 앱의 최상위 컴포넌트에서 QueryClientProvider를 사용하여 React Query의 QueryClient를 Import 한다.
+import pluginQuery from '@tanstack/eslint-plugin-query'
+
+export default [
+  ...pluginQuery.configs['flat/recommended'],
+  // Any other config...
+]
+```
+
+```js
+// 플러그인을 로드하고 사용하려는 규칙만 구성
+
+import pluginQuery from '@tanstack/eslint-plugin-query'
+
+export default [
+  {
+    plugins: {
+      '@tanstack/query': pluginQuery,
+    },
+    rules: {
+      '@tanstack/query/exhaustive-deps': 'error',
+    },
+  },
+  // Any other config...
+]
+```
+
+<br />
+<br />
+<br />
+
+2. Import QueryClient
+
 ```jsx
-/* index.js 또는 App.js */
+// App.jsx
 
-import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   useQuery,
   useMutation,
@@ -108,8 +136,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; /* React Query Devtools */
-import App from './App';
 
 const queryClient = new QueryClient();
 
@@ -126,352 +152,107 @@ const queryClient = new QueryClient();
 //   },
 // });
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+function App() {
+  return (
+    // Provide the client to your App
     <QueryClientProvider client={queryClient}>
-      <App />
-      <ReactQueryDevtools initialIsOpen={false} /> {/* React Query Devtools 추가 */}
+      <{Component} /> or Router
     </QueryClientProvider>
-  </React.StrictMode>
-);
+  )
+}
 ```
 
 ```
-* Tip
-
-QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면 앱 전체에서 동일한 QueryClient 인스턴스를 사용할 수 있다.
+QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면,
+앱 전체에서 동일한 QueryClient 인스턴스를 사용할 수 있다.
 
 이렇게 하면 React Query의 상태를 모든 하위 컴포넌트에서 공유할 수 있으며,
 각 컴포넌트에서 필요한 경우 데이터를 쉽게 가져올 수 있다.
-
-또한 React Query Devtools를 함께 사용하기 위해서도 최상위 컴포넌트에서 QueryClientProvider로 앱을 감싸는 것이 좋다.
 ```
 
-<br /><br />
+<br />
+<br />
+<br />
 
-3. MyComponent를 만들어 React Query를 사용한 Component를 만든다.
-```jsx
-/* MyComponent.js */
+3. Queries 사용 예시
 
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-
-async function fetchData() {
-  const response = await fetch('https://api.example.com/data');
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  return response.json();
-}
-
-function MyComponent() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['data'],
-    queryFn: fetchData,
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  return (
-    <div>
-      <h1>Data</h1>
-      <ul>
-        {data.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <MyComponent />
-    </QueryClientProvider>
-  );
-}
-
-export default App;
-```
-
-<br /><br />
-
-3-1. GET 방식 다른 예시
-
-```jsx
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-
-const fetchTodos = async () => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos');
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  return response.json();
-};
-
+```tsx
 function Todos() {
-  const { data, error, isLoading } = useQuery({
+  const { isPending, isError, data, error } = useQuery({
     queryKey: ['todos'],
-    queryFn: fetchTodos,
-  });
+    queryFn: fetchTodoList, // Fetch function
+    // staleTime: staleTime: 5 * 1000, // data가 fresh 상태로 남아있는 시간
+  })
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error occurred: {error.message}</div>;
+  if (isPending) {
+    return <span>Loading...</span>
+  }
 
+  if (isError) {
+    return <span>Error: {error.message}</span>
+  }
+
+  // 이 시점에서는 isSuccess === true 라고 가정할 수 있다.
   return (
-    <div>
-      {data.map(todo => (
-        <div key={todo.id}>{todo.title}</div>
+    <ul>
+      {data.map((todo) => (
+        <li key={todo.id}>{todo.title}</li>
       ))}
-    </div>
-  );
+    </ul>
+  )
 }
-
-export default Todos;
 ```
 
-<br /><br />
+```
+// 상태 필드 외에 추가적인 "fetchStatus" 속성이 있다.
 
-3-2. POST 방식 다른 예시
-
-```jsx
-import React from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-const addTodo = async (newTodo) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newTodo),
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  return response.json();
-};
-
-function AddTodo() {
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: addTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['todos']);
-    },
-  });
-
-  const handleAddTodo = () => {
-    mutation.mutate({ title: 'New Todo', completed: false });
-  };
-
-  return (
-    <div>
-      <button onClick={handleAddTodo}>Add Todo</button>
-      {mutation.isLoading && <div>Adding todo...</div>}
-      {mutation.isError && <div>An error occurred: {mutation.error.message}</div>}
-    </div>
-  );
-}
-
-export default AddTodo;
+fetchStatus === 'fetching' // 쿼리가 현재 데이터를 가져오고 있는 상태
+fetchStatus === 'paused'   // 쿼리가 데이터를 가져오려 했으나 일시 중지된 상태
+fetchStatus === 'idle'     // 쿼리가 현재 아무 작업도 하지 않는 상태
 ```
 
-<br /><br />
-
-3-3. PUT 방식(데이터 수정) 예시
-
-```jsx
-import React from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-const updateTodo = async (updatedTodo) => {
-  const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${updatedTodo.id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedTodo),
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  return response.json();
-};
-
-function UpdateTodo() {
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: updateTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['todos']);
-    },
-  });
-
-  const handleUpdateTodo = (id) => {
-    mutation.mutate({ id, title: 'Updated Todo', completed: true });
-  };
-
-  return (
-    <div>
-      <button onClick={() => handleUpdateTodo(1)}>Update Todo</button>
-      {mutation.isLoading && <div>Updating todo...</div>}
-      {mutation.isError && <div>An error occurred: {mutation.error.message}</div>}
-    </div>
-  );
-}
-
-export default UpdateTodo;
 ```
+// staleTime
 
-<br /><br />
+1) staleTime의 값을 설정해주지 않으면 기본값은 0
+(data를 fetch 해오자마자 data를 신선하지 않다고 간주)
 
-3-4. 데이터 동기화(데이터가 변경될 때 자동으로 업데이트되도록 하여 사용자 인터페이스를 최신 상태로 유지)
+예시) 특정 쿼리 키에 대한 data를 다시 fetch 해와야 하는 상황일 때,
 
-```jsx
-import React from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
-const fetchPosts = async () => {
-  const response = await fetch('/api/posts');
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
-
-const addPost = async (newPost) => {
-  const response = await fetch('/api/posts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newPost),
-  });
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.json();
-};
-
-function Posts() {
-  const queryClient = useQueryClient();
-
-  // Fetch posts using useQuery
-  const { data: posts, isLoading, error } = useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchPosts,
-  });
-
-  // Mutation for adding a new post
-  const mutation = useMutation({
-    mutationFn: addPost,
-    onSuccess: () => {
-      // Invalidate the 'posts' query to refetch data
-      queryClient.invalidateQueries(['posts']);
-    },
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  const handleAddPost = () => {
-    mutation.mutate({ title: 'New Post', content: 'This is a new post' });
-  };
-
-  return (
-    <div>
-      <button onClick={handleAddPost} disabled={mutation.isLoading}>
-        {mutation.isLoading ? 'Adding...' : 'Add Post'}
-      </button>
-      <ul>
-        {posts.map(post => (
-          <li key={post.id}>{post.title}: {post.content}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default Posts;
+data가 fresh한 상태라면 -> API 호출 없이 캐싱된 data가 다시 사용
+data가 stale한 상태라면 -> API 호출을 통해 신선한 data를 다시 fetch해오고, 이 data를 cache에 저장
 ```
-
-<br /><br />
-
-4. 다른 컴포넌트에서 MyComponent를 가져와서 렌더링 한다.
-```jsx
-/* AnotherComponent.js */
-
-import React from 'react';
-import MyComponent from './MyComponent'; /* MyComponent 가져오기 */
-
-function AnotherComponent() {
-  return (
-    <div>
-      <h2>Another Component</h2>
-      <MyComponent /> {/* MyComponent 사용 */}
-    </div>
-  );
-}
-
-export default AnotherComponent;
-```
-
-<br /><br /><br />
-
-* Option, return value
----
 
 <br />
 
-```
-* Queries option
+```tsx
+// 쿼리 키는 가져올 데이터를 고유하게 설명해야 하므로, 이런 식으로도 키설정이 가능
 
-1) enabled: 자동으로 query를 실행할지에 대한 여부
-
-2) retry: query 동작 실패 시, 자동으로 몇번 만큼 retry를 시도할 지 결정
-
-3) select: response 값에서 필요한 값만을 추출할 수 있도록 하는 옵션
-
-4) refetchInterval: 주기적으로 refetch 하는 간격을 설정하는 옵션
-
-5) throwOnError: error boundary를 에러로 전파할 지 결정하는 옵션
+function Todos({ todoId }) {
+  const result = useQuery({
+    queryKey: ['todos', todoId],
+    ...
+  })
+}
 ```
 
-```
-* Queries return value
+```js
+/**
+ * 쿼리 키는 가져오는 데이터를 고유하게 식별하는 것뿐만 아니라,
+ * QueryFunctionContext의 일부로 쿼리 함수에 전달된다.
+ *
+ * 이는 쿼리 함수를 추출해야 할 때 유용할 수 있다.
+ */
+function Todos({ status, page }) {
+  const result = useQuery({
+    queryKey: ['todos', { status, page }],
+    queryFn: fetchTodoList,
+  })
+}
 
-1) data: 마지막으로 resolved된 데이터
-
-2) error: 에러가 발생했을 때 반환하는 에러 객체
-
-3) isLoading: 최초 fetch가 in-flight 상태일 때 ture 값을 반환
-
-4) isFetching: fetch가 실핼될 때마다 true 값을 반환
-```
-
-<br /><br />
-
-```
-* Mutation option
-
-1) onMutate: mutate 함수가 실행되기 전에 실행되는 함수
-(optimistic update에 유용 예 -> 좋아요 기능 같은)
-```
-
-```
-* Mutation return value
-
-1) mutate: mutation 함수를 실행시키는 함수
+// 쿼리 함수에서 키, 상태, 페이지 변수를 접근
+function fetchTodoList({ queryKey }) {
+  const [_key, { status, page }] = queryKey
+  return new Promise()
+}
 ```
