@@ -235,24 +235,3 @@ function Todos({ todoId }) {
   })
 }
 ```
-
-```js
-/**
- * 쿼리 키는 가져오는 데이터를 고유하게 식별하는 것뿐만 아니라,
- * QueryFunctionContext의 일부로 쿼리 함수에 전달된다.
- *
- * 이는 쿼리 함수를 추출해야 할 때 유용할 수 있다.
- */
-function Todos({ status, page }) {
-  const result = useQuery({
-    queryKey: ['todos', { status, page }],
-    queryFn: fetchTodoList,
-  })
-}
-
-// 쿼리 함수에서 키, 상태, 페이지 변수를 접근
-function fetchTodoList({ queryKey }) {
-  const [_key, { status, page }] = queryKey
-  return new Promise()
-}
-```
