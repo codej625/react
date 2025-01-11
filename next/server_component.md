@@ -3,7 +3,7 @@
 <br />
 <br />
 
-* 서버 컴포넌트
+* 서버 컴포넌트 (Server Component)
 ---
 
 ```
@@ -43,11 +43,11 @@ CSR 시 사용하는 React Hook이라든지,
 
 2. 클라이언트 컴포넌트는 클라이언트에만 실행되지 않는다.
 
-|클라이언트 컴포넌트|서버 컴포넌트|
-|-|-|
-|사전 렌더링을 위해 서버에서 **한 번** 실행|**서버측에서만** 실행되는 컴포넌트|
-|하이드레이션을 위해 브라우저에서 **한 번** 실행||
-|**서버**와 **클라이언트** 모두에서 실행 됨||
+||클라이언트 컴포넌트|서버 컴포넌트|
+|-|-|-|
+|1|사전 렌더링을 위해 서버에서 **한 번** 실행|**서버측에서만** 실행되는 컴포넌트|
+|2|하이드레이션을 위해 브라우저에서 **한 번** 실행||
+|3|**서버**와 **클라이언트** 모두에서 실행 됨||
 
 <br />
 <br />
@@ -67,19 +67,25 @@ Import가 아닌 Prop으로 전달해 사용할 수 있다.
 ```
 
 ```tsx
-// 이런식으로
-<ClientComponent>
-  <ServerComponent />
-<ClientComponent />
+// Index component
+export default function Home() {
+  return (
+    <>
+      <ClientComponent>
+        <ServerComponent />
+      <ClientComponent />
+    </>
+  )
+}
+```
 
-... 생략
-
+```tsx
+// Client component
 export default function ClientComponent({
   children,
 }: {
   children: ReactNode;
 }) {
-  console.log('클라이언트 컴포넌트');
   return <>{children}</>
 }
 ```
@@ -91,5 +97,26 @@ export default function ClientComponent({
 4. 서버 컴포넌트에서 클라이언트 컴포넌트에게 직렬화 되지 않는 Props는 전달 불가하다.
 
 ```
+// 직렬화 (Serialization)
 
+객체, 배열 클래스 등의 복잡한 구조의 데이터를
+네트워크 상으로 전송하기 위해 아주 단순한 형태(문자열, Byte)로 변환하는 것
+```
+
+```js
+// person 와 같은 객체를
+const person = {
+  name: 'codej625',
+  age: 35,
+}
+
+// 이러한 형태의 Json으로 변환 하는것도 직렬화에 포함된다.
+{"name": "codej625", "age": 35}
+```
+
+```
+하지만 함수는 직렬화가 불가능하므로,
+Props로서 전달할 수 없다.
+(클로저, 렉시컬 스코프 라던지 그 외
+다양한 코드조각을 하고 있기 때문에 직렬화가 불가능)
 ```
