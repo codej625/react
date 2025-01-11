@@ -1,15 +1,11 @@
-import SearchBar from "./search-bar";
+import { ReactNode, Suspense } from "react";
+import Searchbar from "../../components/searchbar";
 
-export default function Layout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <h1>야 너두?</h1>
-      <SearchBar />
+    <div>
+      <Searchbar />
       {children}
-    </>
+    </div>
   );
 }
