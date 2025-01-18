@@ -1,7 +1,21 @@
-# 리액트에서 배열을 렌더링 해보자!
+# Array 다루기
 
-### 아래와 같이 배열을 준비한다.
+<br />
+<br />
+
+* 기본적인 배열 렌더링
+---
+
+<br />
+<br />
+<br />
+<br />
+
+1. 사용 예시
+
 ```javascript
+// 예시 데이터
+
 const users = [
   {
     id: 1,
@@ -21,29 +35,8 @@ const users = [
 ];
 ```
 
-<br/>
-
-### ex) 리액트에서 사용 예시
-```javascript
-import React from 'react';
-
-const users = [
-  {
-    id: 1,
-    username: 'velopert',
-    email: 'public.velopert@gmail.com'
-  },
-  {
-    id: 2,
-    username: 'tester',
-    email: 'tester@example.com'
-  },
-  {
-    id: 3,
-    username: 'liz',
-    email: 'liz@example.com'
-  }
-];
+```jsx
+// 예시
 
 function UserList() {
   return (
