@@ -3,13 +3,48 @@
 <br />
 <br />
 
-* App router 이후 Query string을 가져오는 방법이 바뀌었다.
+* App router 이후 Fetching 방법이 많이 바뀌었다.
 ---
 
 ```
-서버 사이드, 클라이언트 사이드에서
+기존 Page router에서 App router로 넘어오면서,
 쿼리 스트링이나, 파라미터를 가져오는 방법이
 많이 바뀌어 정리하는 글이다.
+```
+
+<br />
+
+```
+기존에는 사전 렌더링 과정 진행 중
+백엔드 서버에서 데이터를 Fetching 할 때,
+
+인덱스 파일 (지금은 페이지 파일)을 기준으로
+선행 작업으로 특수한 함수를 사용해 Fetching을 하였다.
+```
+
+```tsx
+// SSR (Server Side Rendering, 서버 사이드 렌더링)
+export async function getServerSideProps() {
+  return { props: {...} }
+}
+
+// SSG (Static Site Generation, 정적 사이트 생성)
+export async function getStaticProps() {
+  return { props: {...} }
+}
+
+// Dynamic SSG (동적 경로에 대한 정적 사이트 생성)
+export async function getStaticPaths() {
+  return { paths: [...], fallback: ... }
+}
+
+// 위와 같이 특수한 함수를 사용해서 Props를 Index 페이지에서 전달받아 사용
+```
+
+```
+하지만 서버 컴포넌트가 업데이트되면서 이러한 특수한 함수를 사용할 필요가 없어졌다.
+
+Next에서는 데이터가 필요한 곳에서 직접 불러 사용하라고 말하고 있다.
 ```
 
 <br />
