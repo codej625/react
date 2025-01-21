@@ -54,9 +54,9 @@ API 요청 결과를 캐싱하여 관리한다.
 
 1. Install
 
-```
-// 리액트 쿼리 설치
+`리액트 쿼리 설치`
 
+```
 npm i @tanstack/react-query
 
 or
@@ -72,9 +72,11 @@ or
 bun add @tanstack/react-query
 ```
 
-```
-// 버그와 불일치를 잡는 데 도움이 되는 ESLint 플러그인 쿼리
+<br />
 
+`버그와 불일치를 잡는 데 도움이 되는 ESLint 플러그인 쿼리`
+
+```
 npm i -D @tanstack/eslint-plugin-query
 
 or
@@ -97,9 +99,11 @@ ESLint 설정 파일(일반적으로 .eslintrc.json, .eslintrc.js, 또는 .eslin
 다음은 eslint.config.js 파일을 사용하는 예시
 ```
 
-```js
-// 추천 설정 플러그인의 모든 권장 규칙을 활성화
+<br />
 
+`추천 설정 플러그인의 모든 권장 규칙을 활성화`
+
+```js
 import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default [
@@ -108,9 +112,11 @@ export default [
 ]
 ```
 
-```js
-// 플러그인을 로드하고 사용하려는 규칙만 구성
+<br />
 
+`플러그인을 로드하고 사용하려는 규칙만 구성`
+
+```js
 import pluginQuery from '@tanstack/eslint-plugin-query'
 
 export default [
@@ -132,9 +138,9 @@ export default [
 
 2. Import QueryClient
 
-```jsx
-// App.jsx
+`App.jsx`
 
+```jsx
 import {
   useQuery,
   useMutation,
@@ -225,17 +231,21 @@ const WeatherComponent = () => {
 };
 ```
 
-```
-// 상태 필드 외에 추가적인 "fetchStatus" 속성이 있다.
+<br />
 
+`상태 필드 외에 추가적인 "fetchStatus" 속성이 있다.`
+
+```
 fetchStatus === 'fetching' // 쿼리가 현재 데이터를 가져오고 있는 상태
 fetchStatus === 'paused'   // 쿼리가 데이터를 가져오려 했으나 일시 중지된 상태
 fetchStatus === 'idle'     // 쿼리가 현재 아무 작업도 하지 않는 상태
 ```
 
-```
-// 자주 사용되는 옵션
+<br />
 
+`자주 사용되는 옵션`
+
+```
 useQuery({
   queryKey: ['todo', id],
   queryFn: () => fetchTodoById(id),
@@ -247,9 +257,11 @@ useQuery({
 })
 ```
 
-```jsx
-// 쿼리 키는 가져올 데이터를 고유하게 설명해야 하므로, 이런 식으로도 키설정이 가능
+<br />
 
+`쿼리 키는 가져올 데이터를 고유하게 설명해야 하므로, 이런 식으로도 키설정이 가능`
+
+```jsx
 function Todos({ todoId }) {
   const result = useQuery({
     queryKey: ['todos', todoId],
@@ -290,9 +302,11 @@ function Todos({ todoId }) {
 3) useQueryClient - QueryClient 인스턴스에 직접 접근할 때 사용
 ```
 
-```
-// Select options
+<br />
 
+`Select options`
+
+```tsx
 const { data: todoTitles } = useQuery({
   queryKey: ['todos'],
   queryFn: fetchTodos,
