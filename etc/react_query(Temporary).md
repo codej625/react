@@ -6,9 +6,11 @@
 * React query ?
 ---
 
-```
-// 클라이언트 상태와 / 서버 상태의 분리
+<br />
 
+`1) 클라이언트 상태와 / 서버 상태의 분리`
+
+```
 클라이언트에서 사용하는 상태와,
 서버에서 가져온 상태를 혼합하여 사용할 경우
 상태 관리와 로직 작성이 복잡해지고 유지보수가 어려워질 수 있는데,
@@ -16,25 +18,31 @@
 서버 상태를 따로 관리할 수 있어 프로젝트 관리가 편해진다.
 ```
 
-```
-// 최신 상태 유지
+<br />
 
+`2) 최신 상태 유지`
+
+```
 서버의 최신 상태를 가져오는 기능을 제공한다.
 일정 시간마다 상태를 업데이트하거나,
 특정 동작 이후에 상태를 업데이트할 수 있다.
 ```
 
-```
-// 캐싱, 중복 요청 방지
+<br />
 
+`3) 캐싱, 중복 요청 방지`
+
+```
 API 요청 결과를 캐싱하여 관리한다.
 서버에 API 요청하여 받아온 결과를 캐싱하며,
 중복 요청을 최소화할 수 있다.
 ```
 
-```
-// 비동기 요청에 대한 상태 핸들링
+<br />
 
+`4) 비동기 요청에 대한 상태 핸들링`
+
+```
 비동기 API 요청에 대한 로딩 상태, 결과 값, 에러 상태와 같은
 여러가지 상태를 확인하는 기능을 제공한다.
 ```
@@ -63,8 +71,6 @@ or
 
 bun add @tanstack/react-query
 ```
-
-<br />
 
 ```
 // 버그와 불일치를 잡는 데 도움이 되는 ESLint 플러그인 쿼리
@@ -177,30 +183,46 @@ QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면,
 3. Queries 사용 예시
 
 ```tsx
-function Todos() {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['todos'],
-    queryFn: fetchTodoList, // Fetch function
-    // staleTime: staleTime: 5 * 1000, // data가 fresh 상태로 남아있는 시간
-  })
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
-  if (isPending) {
-    return <span>Loading...</span>
-  }
+const fetchWeather = async () => {
+  const { data } = await axios.get('https://api.example.com/weather');
+  return data;
+};
 
-  if (isError) {
-    return <span>Error: {error.message}</span>
-  }
+const WeatherComponent = () => {
+  const { isLoading, error, data, isFetching } = useQuery(
+    ['weather'],
+    fetchWeather,
+    {
+      staleTime: 5000,  // 5초 동안 데이터가 신선함으로 간주됩니다.
+      cacheTime: 10000, // 데이터가 캐시에서 10초 동안 유지됩니다.
+      refetchOnWindowFocus: true, // 창 포커스 변경 시 재페치
+      refetchInterval: false, // 자동 새로 고침 없음
+      retry: 3, // 실패 시 재시도 횟수
+      onSuccess: () => { console.log('Data fetched successfully'); }, // 성공 시 호출
+      onError: (error) => { console.error('Error fetching data:', error); }, // 실패 시 호출
+      initialData: { weather: 'Fetching weather...' }, // 기본 데이터
+      select: (data) => data.weather, // 데이터 변환
+      enabled: true, // 쿼리 자동 실행 여부
+      refetchOnReconnect: true, // 네트워크 재연결 시 재페치
+      refetchOnMount: true, // 컴포넌트 마운트 시 재페치
+      keepPreviousData: true, // 이전 데이터 유지
+    },
+  );
 
-  // 이 시점에서는 isSuccess === true 라고 가정할 수 있다.
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>An error occurred: {error.message}</div>;
+
   return (
-    <ul>
-      {data.map((todo) => (
-        <li key={todo.id}>{todo.title}</li>
-      ))}
-    </ul>
-  )
-}
+    <div>
+      <h1>Current Weather</h1>
+      <p>{data}</p>
+      {isFetching && <span>Updating...</span>}
+    </div>
+  );
+};
 ```
 
 ```
@@ -225,8 +247,6 @@ useQuery({
 })
 ```
 
-<br />
-
 ```jsx
 // 쿼리 키는 가져올 데이터를 고유하게 설명해야 하므로, 이런 식으로도 키설정이 가능
 
@@ -237,6 +257,24 @@ function Todos({ todoId }) {
   })
 }
 ```
+
+<br />
+
+| 옵션 | 설명 | 기본값 |
+|:---|:---|:---|
+| `staleTime` | 데이터가 '신선'하다고 간주되는 시간 (밀리초) | 0 |
+| `cacheTime` | 데이터가 캐시에 남아 있는 시간 (밀리초) | 300000 (5분) |
+| `refetchOnWindowFocus` | 창 포커스 변경 시 데이터 재페치 여부 | true |
+| `refetchInterval` | 자동으로 데이터를 새로 고침하는 간격 (밀리초), `false`로 설정 시 주기적 재페치 없음 | `false` |
+| `retry` | 데이터 페치 실패 시 재시도 횟수 | 3 |
+| `onSuccess` | 데이터 페치 성공 시 호출되는 함수 | - |
+| `onError` | 데이터 페치 실패 시 호출되는 함수 | - |
+| `enabled` | 쿼리가 자동으로 실행되는지 여부, `false`로 설정 시 쿼리 자동 실행 안됨 | true |
+| `select` | 쿼리 결과 데이터를 변환하는 함수 | - |
+| `initialData` | 캐시에 데이터가 없을 때 사용할 기본 데이터 | - |
+| `refetchOnReconnect` | 네트워크 재연결 시 데이터 재페치 여부 | true |
+| `refetchOnMount` | 컴포넌트 마운트 시 데이터 재페치 여부 | true |
+| `keepPreviousData` | 데이터 요청하는 동안 이전 데이터를 유지할지 여부 | false |
 
 <br />
 <br />
