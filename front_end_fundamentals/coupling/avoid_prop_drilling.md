@@ -187,7 +187,7 @@ function ItemEditModal({ open, onConfirm, onClose }) {
   );
 }
 
-function ItemEditList({ children, onClose }) {
+function ItemEditBody({ children, onClose }) {
   const { items, recommendedItems } = useItemEditModalContext();
 
   return (
