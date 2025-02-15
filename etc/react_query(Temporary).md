@@ -8,7 +8,7 @@
 
 <br />
 
-`1) 클라이언트 상태와 / 서버 상태의 분리`
+`클라이언트 상태와 / 서버 상태의 분리`
 
 ```
 클라이언트에서 사용하는 상태와,
@@ -20,7 +20,7 @@
 
 <br />
 
-`2) 최신 상태 유지`
+`최신 상태 유지`
 
 ```
 서버의 최신 상태를 가져오는 기능을 제공한다.
@@ -30,7 +30,7 @@
 
 <br />
 
-`3) 캐싱, 중복 요청 방지`
+`캐싱, 중복 요청 방지`
 
 ```
 API 요청 결과를 캐싱하여 관리한다.
@@ -40,7 +40,7 @@ API 요청 결과를 캐싱하여 관리한다.
 
 <br />
 
-`4) 비동기 요청에 대한 상태 핸들링`
+`비동기 요청에 대한 상태 핸들링`
 
 ```
 비동기 API 요청에 대한 로딩 상태, 결과 값, 에러 상태와 같은
@@ -192,7 +192,7 @@ QueryClientProvider를 앱의 최상위 컴포넌트로 감싸면,
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const fetchWeather = async () => {
+const fetchData = async () => {
   const { data } = await axios.get('https://api.example.com/weather');
   return data;
 };
@@ -200,7 +200,7 @@ const fetchWeather = async () => {
 const WeatherComponent = () => {
   const { isLoading, error, data, isFetching } = useQuery(
     ['weather'],
-    fetchWeather,
+    fetchData,
     {
       staleTime: 5000,  // 5초 동안 데이터가 신선함으로 간주됩니다.
       cacheTime: 10000, // 데이터가 캐시에서 10초 동안 유지됩니다.
@@ -292,14 +292,205 @@ function Todos({ todoId }) {
 <br />
 <br />
 
-4. 추후 업데이트 사항
+4. useMutation - 데이터 변경 작업(CREATE, UPDATE, DELETE)에 사용
 
 ```
-1) useMutation - 데이터 변경 작업(CREATE, UPDATE, DELETE)에 사용
+React Query의 useMutation은 서버의 데이터를 생성, 수정, 삭제와 같은 "쓰기" 작업을 수행할 때 사용하는 훅이다.
 
-2) useInfiniteQuery - 무한 스크롤 구현에 사용
+주로 비동기 작업(예: POST, PUT, DELETE 요청)을 처리하며,
+성공, 실패, 로딩 등의 상태를 관리할 수 있게 도와준다.
+```
 
-3) useQueryClient - QueryClient 인스턴스에 직접 접근할 때 사용
+<br />
+
+`Mutation 함수 정의하기`
+
+```
+먼저, 서버에 데이터를 변경하기 위한 비동기 함수를 만들어보자.
+
+예를 들어, 새로운 Todo를 생성하기 위한 POST 요청 함수이다.
+```
+
+```tsx
+// createTodo.js
+
+import axios from 'axios';
+
+export const createTodo = async (newTodo) => {
+  const response = await axios.post('/todos', newTodo);
+  return response.data;
+};
+```
+
+```
+이 함수는 newTodo 객체를 받아서 /todos 엔드포인트로 POST 요청을 보내고,
+응답 데이터를 반환한다.
+```
+
+<br />
+
+`useMutation 훅 사용하기`
+
+```
+이제 React 컴포넌트 내에서 useMutation 훅을 사용하여 위에서 만든 createTodo 함수를 등록한다.
+
+또한, useQueryClient를 사용하여 mutation 성공 시,
+기존 쿼리(예: todos 목록)를 무효화(invalidate)하여 최신 데이터를 가져올 수 있다.
+```
+
+```tsx
+// AddTodo.js
+import React from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { createTodo } from './createTodo';
+
+function AddTodo() {
+  const queryClient = useQueryClient();
+
+  // useMutation 사용: createTodo 함수를 mutationFn으로 전달하고,
+  // onSuccess 옵션을 이용해 mutation 성공 후 쿼리를 무효화합니다.
+  const mutation = useMutation(createTodo, {
+    onSuccess: () => {
+      // 새 Todo 추가 후, 'todos' 쿼리를 무효화하여 최신 데이터를 가져옴
+      queryClient.invalidateQueries('todos');
+    },
+    // 필요시 onError, onMutate, onSettled 등을 추가하여 세밀한 제어 가능
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTodo = { title: e.target.todo.value };
+    mutation.mutate(newTodo);
+    e.target.todo.value = '';
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input name="todo" type="text" placeholder="새 Todo 입력" />
+        <button type="submit">추가하기</button>
+      </form>
+      {mutation.isLoading && <p>추가 중...</p>}
+      {mutation.isError && <p>에러 발생: {mutation.error.message}</p>}
+    </div>
+  );
+}
+
+export default AddTodo;
+```
+
+```
+mutation.mutate(newTodo) 를 호출하면 createTodo 함수가 실행된다.
+
+mutation 상태값 (예: isLoading, isError, error)을 통해,
+UI에 로딩 상태나 에러 메시지를 보여줄 수 있다.
+
+onSuccess 옵션을 사용해,
+성공 후 쿼리를 무효화하여 데이터 동기화를 유지한다.
+```
+
+<br />
+
+```tsx
+// 전체 완성 코드
+
+// App.js
+import React from 'react';
+import { QueryClient, QueryClientProvider, useQuery, useMutation, useQueryClient } from 'react-query';
+import axios from 'axios';
+
+// React Query 클라이언트 생성
+const queryClient = new QueryClient();
+
+// Todo 목록을 불러오는 함수 (GET 요청)
+const fetchTodos = async () => {
+  const response = await axios.get('/todos');
+  return response.data;
+};
+
+// 새로운 Todo를 생성하는 함수 (POST 요청)
+const createTodo = async (newTodo) => {
+  const response = await axios.post('/todos', newTodo);
+  return response.data;
+};
+
+// Todo 목록과 추가 기능을 포함한 컴포넌트
+function Todos() {
+  const { data: todos, isLoading, isError, error } = useQuery('todos', fetchTodos);
+  const queryClient = useQueryClient();
+
+  // useMutation을 사용하여 createTodo 함수 등록
+  const mutation = useMutation(createTodo, {
+    onSuccess: () => {
+      // Todo 추가 후, 'todos' 쿼리를 무효화하여 최신 데이터를 다시 불러옴
+      queryClient.invalidateQueries('todos');
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTodo = { title: e.target.todo.value };
+    mutation.mutate(newTodo);
+    e.target.todo.value = '';
+  };
+
+  if (isLoading) return <p>로딩 중...</p>;
+  if (isError) return <p>에러 발생: {error.message}</p>;
+
+  return (
+    <div>
+      <h2>Todo List</h2>
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit}>
+        <input name="todo" type="text" placeholder="새 Todo 입력" />
+        <button type="submit">추가하기</button>
+      </form>
+      {mutation.isLoading && <p>추가 중...</p>}
+      {mutation.isError && <p>에러 발생: {mutation.error.message}</p>}
+    </div>
+  );
+}
+
+// 최상위 컴포넌트: QueryClientProvider로 React Query 환경 구성
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Todos />
+    </QueryClientProvider>
+  );
+}
+
+export default App;
+```
+
+```
+useMutation은 주로 데이터 변경 작업(생성, 수정, 삭제)에 사용한다.
+
+1) mutation 함수(예: createTodo)는
+   서버와 통신하는 비동기 함수여야 하며, Promise를 반환한다.
+
+2) mutation.mutate() 또는 **mutation.mutateAsync()를 호출하여 mutation 작업을 실행한다.
+
+3) 옵션(onSuccess, onError, onMutate, onSettled 등)을 사용해
+   mutation의 각 단계에서 원하는 작업을 실행할 수 있다.
+   React Query의 캐시 관리 기능(예: invalidateQueries)과 결합하여,
+   데이터의 일관성을 유지할 수 있다.
+```
+
+<br />
+<br />
+<br />
+
+5. 추후 업데이트 사항
+
+```
+1) useInfiniteQuery - 무한 스크롤 구현에 사용
+
+2) useQueryClient - QueryClient 인스턴스에 직접 접근할 때 사용
 ```
 
 <br />
