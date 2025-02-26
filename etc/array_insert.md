@@ -83,13 +83,13 @@ import React, { useState, useRef } from 'react';
 import CreateUser from './CreateUser';
 
 interface User {
-  id: number;
+  id?: number;
   username: string;
   email: string;
 }
 
 function App() {
-  const [inputs, setInputs] = useState<{ username: string; email: string }>({
+  const [inputs, setInputs] = useState<User>({
     username: '',
     email: '',
   });
