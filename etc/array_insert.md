@@ -1,33 +1,57 @@
-# 배열에 항목을 추가해보자!
+# 배열에 항목을 추가하기
+
+<br />
+<br />
+
+* 리액트에서 상태를 다루는 방법을 알아보자.
+---
 
 ```
-우선, 예시를 만들기 위해 input 두개와 button 하나로 이루어진 CreateUser.js 라는 컴포넌트를 src 디렉터리에 만들어보자.
+리액트는 state(상태)가 변경될 때, 리렌더링 된다.
+
+상태에 배열값을 넣고,
+리액트에서 상태를 사용하는 방법에 익숙해져 보자.
 ```
 
 <br/>
+<br/>
+<br/>
+<br/>
 
-```
-CreateUser.js
-```
-```javascript
+1. `CreateUser 컴포넌트 만들기`
+
+```tsx
+// src/CreateUser.tsx
 import React from 'react';
 
-function CreateUser({ username, email, onChange, onCreate }) {
+// props 타입 정의
+interface CreateUserProps {
+  username: string;
+  email: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCreate: () => void;
+}
+
+function CreateUser({ username, email, onChange, onCreate }: CreateUserProps) {
   return (
-    <div>
+    <div style={{ display: 'flex', gap: '10px', padding: '10px' }}>
       <input
         name="username"
         placeholder="계정명"
-        onChange={onChange}
         value={username}
+        onChange={onChange}
+        style={{ padding: '5px' }}
       />
       <input
         name="email"
         placeholder="이메일"
-        onChange={onChange}
         value={email}
+        onChange={onChange}
+        style={{ padding: '5px' }}
       />
-      <button onClick={onCreate}>등록</button>
+      <button onClick={onCreate} style={{ padding: '5px 10px' }}>
+        등록
+      </button>
     </div>
   );
 }
@@ -35,166 +59,151 @@ function CreateUser({ username, email, onChange, onCreate }) {
 export default CreateUser;
 ```
 
-<br/>
-
 ```
-상태관리를 CreateUser 에서 하지 않고 부모 컴포넌트인 App 에서 하게 하고,
-input 의 값 및 이벤트로 등록할 함수들을 props 로 넘겨받아서 처리해보자!
-```
+CreateUserProps 인터페이스를 만들어 props 타입을 정의했다.
 
-<br/><br/>
-
-```
-배열에 변화를 줄 때에는 객체와 마찬가지로, 불변성을 지켜주어야 한다.
-그렇기 때문에, 배열의 push, splice, sort 등의 함수를 사용하면 안 된다.
-(만약에 사용해야 한다면, 기존의 배열을 한번 복사하고 나서 사용해야 한다.)
+onChange는 React.ChangeEvent<HTMLInputElement> 타입을 사용해서 input 이벤트에 맞게 설정했다.
 ```
 
-<br/><br/>
+<br />
+<br />
+<br />
+
+2. `App 컴포넌트 (부모 컴포넌트)를 사용한 상태의 중앙관리`
 
 ```
-불변성을 지키면서 배열에 새 항목을 추가하는 방법은 두가지가 있다.
-첫번째는 "spread 연산자"를 사용하는 것이다.
+방법 첫 번째
+
+Spread 연산자 사용
 ```
-```javascript
-import React, { useRef, useState } from 'react';
+
+```tsx
+// src/App.tsx
+import React, { useState, useRef } from 'react';
 import CreateUser from './CreateUser';
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
 function App() {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<{ username: string; email: string }>({
     username: '',
-    email: ''
+    email: '',
   });
   const { username, email } = inputs;
-
-  const onChange = e => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
-
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: 'velopert',
-      email: 'public.velopert@gmail.com'
-    },
-    {
-      id: 2,
-      username: 'tester',
-      email: 'tester@example.com'
-    },
-    {
-      id: 3,
-      username: 'liz',
-      email: 'liz@example.com'
-    }
+  const [users, setUsers] = useState<User[]>([
+    { id: 1, username: 'velopert', email: 'public.velopert@gmail.com' },
+    { id: 2, username: 'tester', email: 'tester@example.com' },
+    { id: 3, username: 'liz', email: 'liz@example.com' },
   ]);
+  const nextId = useRef<number>(4);
 
-  const nextId = useRef(4);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const onCreate = () => {
-    const user = {
-      id: nextId.current,
-      username,
-      email
-    };
-    setUsers([...users, user]);
-
-    setInputs({
-      username: '',
-      email: ''
-    });
+    const newUser: User = { id: nextId.current, username, email };
+    setUsers((prev) => [...prev, newUser]);
+    setInputs({ username: '', email: '' });
     nextId.current += 1;
   };
+
   return (
-    <>
+    <div>
       <CreateUser
         username={username}
         email={email}
         onChange={onChange}
         onCreate={onCreate}
       />
-    </>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.username} ({user.email})
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 export default App;
 ```
 
-<br/><br/>
+<br />
+<br />
 
 ```
-또 다른 방법은 concat 함수를 사용하는 것 이다.
-concat 함수는 기존의 배열을 수정하지 않고, 새로운 원소가 추가된 새로운 배열을 만들어 준다.
+방법 두 번째
+
+concat 메서드 사용
 ```
-```javascript
-import React, { useRef, useState } from 'react';
+
+```tsx
+// src/App.tsx
+import React, { useState, useRef } from 'react';
 import CreateUser from './CreateUser';
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+}
+
 function App() {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<{ username: string; email: string }>({
     username: '',
-    email: ''
+    email: '',
   });
   const { username, email } = inputs;
-  const onChange = e => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value
-    });
-  };
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: 'velopert',
-      email: 'public.velopert@gmail.com'
-    },
-    {
-      id: 2,
-      username: 'tester',
-      email: 'tester@example.com'
-    },
-    {
-      id: 3,
-      username: 'liz',
-      email: 'liz@example.com'
-    }
+  const [users, setUsers] = useState<User[]>([
+    { id: 1, username: 'velopert', email: 'public.velopert@gmail.com' },
+    { id: 2, username: 'tester', email: 'tester@example.com' },
+    { id: 3, username: 'liz', email: 'liz@example.com' },
   ]);
+  const nextId = useRef<number>(4);
 
-  const nextId = useRef(4);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const onCreate = () => {
-    const user = {
-      id: nextId.current,
-      username,
-      email
-    };
-    setUsers(users.concat(user));
-
-    setInputs({
-      username: '',
-      email: ''
-    });
+    const newUser: User = { id: nextId.current, username, email };
+    setUsers((prev) => prev.concat(newUser));
+    setInputs({ username: '', email: '' });
     nextId.current += 1;
   };
+
   return (
-    <>
+    <div>
       <CreateUser
         username={username}
         email={email}
         onChange={onChange}
         onCreate={onCreate}
       />
-    </>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.username} ({user.email})
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 export default App;
-```
-
-```
-배열에 새 항목을 추가 할 때에는 이렇게 spread 연산자를 사용하거나, concat 을 사용 한다.
 ```
