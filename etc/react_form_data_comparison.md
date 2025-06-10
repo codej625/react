@@ -46,6 +46,9 @@ useRef는 .current 속성을 통해 값을 저장하며,
 ```
 아래는 Form을 Submit 했을때,
 원본값과 비교하는 에시이다.
+
+React Hook Form을 사용하고 있다는 전제이고,
+특정 값을 set 할 게 아니라면 setValue()가 아닌 reset()를 사용하는게 심플하다.
 ```
 
 ```ts
