@@ -22,13 +22,13 @@ input은 이벤트 객체(e)를 파라미터로 받아와 사용 할 수 있는�
 
 1. 이벤트 객체와 상태(state)를 사용한 예시
 
-```javascript
-import React, { useState } from 'react';
+```ts
+import React, { useState, ChangeEvent } from 'react';
 
 function InputTest() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
@@ -38,12 +38,11 @@ function InputTest() {
 
   return (
     <div>
-      <button onClick={onReset}>reset</button>
+      <button onClick={onReset}>Reset</button>
       <br />
       <input onChange={onChange} value={inputValue} />
-
       <div>
-        <b>value: {inputValue}</b>
+        <b>Value: {inputValue}</b>
       </div>
     </div>
   );
