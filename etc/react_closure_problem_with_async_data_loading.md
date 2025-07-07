@@ -111,7 +111,7 @@ const CallbackComponent = () => {
       field: "category",
       valueFormatter: (value) => value;
     }
-  ], []);
+  ], [data]);
 
   // 현재 데이터로 컬럼 생성
   const columns = createColumns(data);
