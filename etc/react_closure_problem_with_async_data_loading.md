@@ -119,3 +119,15 @@ const CallbackComponent = () => {
   return <DataGrid columns={columns} />;
 };
 ```
+
+<br />
+
+`3) length를 사용`
+
+```ts
+{data.length > 0 && (
+  <Component>
+    ...
+  </Component>
+)}
+```
