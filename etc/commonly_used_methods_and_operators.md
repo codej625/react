@@ -146,3 +146,61 @@ const wordLengths = words.map(function(word) {
 });
 console.log(wordLengths); // [5, 6, 6, 10, 4]
 ```
+
+<br />
+<br />
+<br />
+
+6. find
+
+```
+배열의 요소를 순회하며, 주어진 조건을 만족하는 첫 번째 요소를 반환한다.
+(조건을 만족하는 요소가 없으면 undefined를 반환)
+```
+
+```js
+const numbers = [5, 12, 8, 130, 44];
+
+// 10보다 큰 첫 번째 요소 찾기
+const found = numbers.find(num => num > 10);
+console.log(found); // 출력: 12
+
+// 객체 배열에서 특정 조건 찾기
+const users = [
+  { id: 1, name: '철수' },
+  { id: 2, name: '영희' },
+  { id: 3, name: '민수' }
+];
+const user = users.find(u => u.name === '영희');
+console.log(user); // 출력: { id: 2, name: '영희' }
+
+// 조건에 맞는 요소가 없는 경우
+const notFound = numbers.find(num => num > 200);
+console.log(notFound); // 출력: undefined
+```
+
+<br />
+<br />
+<br />
+
+7. includes
+
+```
+배열에 특정 값이 존재하는지 확인하여,
+불리언 값(true 또는 false)를 반환한다.
+```
+
+```js
+const fruits = ['사과', '바나나', '오렌지'];
+
+// 특정 값이 배열에 있는지 확인
+console.log(fruits.includes('바나나')); // 출력: true
+console.log(fruits.includes('포도')); // 출력: false
+
+// 시작 인덱스 지정
+console.log(fruits.includes('사과', 1)); // 출력: false (인덱스 1부터 검색, '사과'는 0에 있음)
+
+// 객체 배열에서의 한계
+const items = [{ id: 1 }, { id: 2 }];
+console.log(items.includes({ id: 1 })); // 출력: false (객체는 참조 비교)
+```
