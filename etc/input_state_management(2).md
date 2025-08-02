@@ -73,9 +73,9 @@ export default InputSample;
 ```
 
 ```js
-inputs[name] = value; (X)
-
 // 상태가 업데이트되지 않으므로 리렌더링이 발생하지 않는다.
+
+inputs[name] = value; // (X)
 ```
 
 <br/>
