@@ -1,11 +1,20 @@
-# 리액트에서 Debounce를 구현해보자.
+# Debounce
 
-<br /><br />
+<br />
+<br />
 
-* 예시
+* 리액트에서 Debounce 구현하기
+
 ---
 
-```javascript
+<br />
+<br />
+<br />
+<br />
+
+1. 예시
+
+```js
 const searchUsers = (name) => {
   // 서버에서 응답받은 데이터라 가정
   const users = [
@@ -17,8 +26,8 @@ const searchUsers = (name) => {
     { idx: 6, name: '낙희', age: 27 },
   ];
 
+  // name의 값이 ''이면 빈 배열 반환
   return name === '' ? (
-    // name의 값이 ''이면 빈 배열 반환
     []
   ) : (
     // 배열을 필터링하고 user.name 값 중에 name으로 시작하는 값만 반환
@@ -28,12 +37,12 @@ const searchUsers = (name) => {
 ```
 
 ```jsx
-import { useState, useEffect } from 'react'
-
 export default function Debounce() {
+  //
 
   // input 값을 담고 보여주기 위한 useState()
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
+
   // searchUsers 함수에서 필터링 된 값을 담는 useState() 
   const [search, setSearch] = useState([]);
   
@@ -55,7 +64,7 @@ export default function Debounce() {
         type="text" 
         name="search-users" 
         id="search-users"
-        className='search-users'
+        className="search-users"
         value={input}
         onChange={e => setInput(e.target.value)}
       />
@@ -75,41 +84,52 @@ export default function Debounce() {
 }
 ```
 
-<br /><br /><br />
+<br />
+<br />
+<br />
 
-* API 버전
----
+2. API 버전 예시
 
-```jsx
-import { useState, useEffect } from 'react';
-import './App.css';
-
+```js
+// 패칭 함수
 const fetchTodos = async () => {
+  //
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/todos");
     if (!response.ok) {
       throw new Error("Network error");
     }
-    return response.json();
+    return response?.json();
   } 
   catch(err) { 
     console.error('Error message -> ', err); 
-    return []; // 네트워크 에러 시 빈 배열 반환
+    // 네트워크 에러 시 빈 배열 반환
+    return [];
   }
 };
 
+// 데이터를 받아 상태에 담는 함수
 const todoCheck = async (inputCheck, todoList) => {
   return (!inputCheck) ? [] : todoList.filter(todo => todo.title.startsWith(inputCheck));
 }
+```
 
+```jsx
 export default function App() {
-  const [input, setInput] = useState('');
+  //
+
+  // input 값을 담고 보여주기 위한 useState()
+  const [input, setInput] = useState("");
+
+  // searchUsers 함수에서 필터링 된 값을 담는 useState() 
   const [search, setSearch] = useState([]);
 
   useEffect(() => {
     const timerId = setTimeout(async () => {
       try {
+        // 패칭
         const result = await fetchTodos();
+
         const filteredTodos = await todoCheck(input, result);
         setSearch(filteredTodos);
       } 
@@ -128,7 +148,7 @@ export default function App() {
         type="text" 
         name="search-users" 
         id="search-users"
-        className='search-users'
+        className="search-users"
         value={input}
         onChange={e => setInput(e.target.value)}
       />
