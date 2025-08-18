@@ -1,33 +1,39 @@
 # Context API
 
-<br /><br />
+<br />
+<br />
 
-* Context API + useContext()
+* 전역 상태관리
+
 ---
 
 ```
 컴포넌트 간에 데이터를 전역적으로 공유할 수 있게 해주는 기능이다.
+
 이를 사용하면 props drilling(중첩된 컴포넌트에 props를 계속 전달하는 것)을 피할 수 있다.
 ```
 
-<br /><br /><br />
+<br />
+<br />
+<br />
+<br />
 
-* 예시
----
+1. 예시
 
-1. Context 생성
+`Context 생성`
 
-```javascript
+```js
 // CustomContext.js
 
 import React, { createContext } from 'react';
 
+// 초깃값을 설정 시 다른 컴포넌트에서 곧바로 사용할 수 있다.
 export const CustomContext = createContext(null);
 ```
 
-<br /><br />
+<br />
 
-2. Context Provider 설정
+`Context Provider 설정`
 
 ```jsx
 // App.jsx
@@ -42,7 +48,8 @@ const App = () => {
   return (
     // Context Provider를 사용하여 하위 컴포넌트에 데이터를 제공. (보통 최상위 컴포넌트에서 설정한다.)
     <CustomContext.Provider value={{ state, setState }}>
-      <ChildComponent /> // context를 적용할 하위 컴포넌트
+      // context를 적용할 하위 컴포넌트
+      <ChildComponent />
     </CustomContext.Provider>
   );
 };
@@ -50,9 +57,9 @@ const App = () => {
 export default App;
 ```
 
-<br /><br />
+<br />
 
-3. Context 사용
+`Context 사용`
 
 ```jsx
 // ChildComponent.jsx
@@ -61,7 +68,8 @@ import React, { useContext } from 'react';
 import { CustomContext } from '... 경로';
 
 export defalut function ChildComponent() {
-  const { state, setState } = useContext(CustomContext); // 만들어 놓은 context 사용.
+  // 만들어 놓은 context 사용
+  const { state, setState } = useContext(CustomContext);
 
   return (
     <div>
@@ -76,33 +84,36 @@ export defalut function ChildComponent() {
 };
 ```
 
-<br /><br /><br />
+<br />
+<br />
+<br />
 
-* 예시2
----
+2. 예시2
   
-1-1. Context 생성 시 초깃값 설정
+`Context 생성 시 초깃값 설정`
 
-```javascript
+```js
 // CustomContext.js
 
 import { createContext } from 'react';
 
-export const CustomContext = createContext('codej625'); // 초깃값을 설정 시 다른 컴포넌트에서 곧바로 사용할 수 있다.
+// 초깃값을 설정 시 다른 컴포넌트에서 곧바로 사용할 수 있다.
+export const CustomContext = createContext('codej625');
 ```
 
-<br /><br />
+<br />
 
-2-2. Context 초깃값 사용
+`Context 초깃값 사용`
 
 ```jsx
 // ChildComponent.jsx
 
 import { useContext } from 'react';
-import { CustomContext } from '... 경로';
+import { CustomContext } from '...경로';
 
 export defalut function ChildComponent() {
-  const text = useContext(CustomContext); // 초깃값 사용
+  // 초깃값 사용
+  const text = useContext(CustomContext);
 
   return (
     <>
