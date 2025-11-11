@@ -18,22 +18,24 @@
 <br />
 <br />
 
-1. 예시
+1. 예시 - 세팅
 
-`Context 생성`
+<br />
+
+`1) Context 생성`
 
 ```js
 // CustomContext.js
 
 import React, { createContext } from 'react';
 
-// 초깃값을 설정 시 다른 컴포넌트에서 곧바로 사용할 수 있다.
+// 초깃값을 설정하지 않음
 export const CustomContext = createContext(null);
 ```
 
 <br />
 
-`Context Provider 설정`
+`2) Context Provider 설정`
 
 ```jsx
 // App.jsx
@@ -58,8 +60,14 @@ export default App;
 ```
 
 <br />
+<br />
+<br />
 
-`Context 사용`
+2. Context 사용 - 나중에 값 세팅
+
+<br />
+
+`만들어 놓은 context 사용`
 
 ```jsx
 // ChildComponent.jsx
@@ -88,9 +96,11 @@ export defalut function ChildComponent() {
 <br />
 <br />
 
-2. 예시2
-  
-`Context 생성 시 초깃값 설정`
+3. Context 사용 - 초깃값 세팅
+
+<br />
+
+`1) Context 생성 시, 초깃값 설정`
 
 ```js
 // CustomContext.js
@@ -103,7 +113,7 @@ export const CustomContext = createContext('codej625');
 
 <br />
 
-`Context 초깃값 사용`
+`2) Context 초깃값 사용`
 
 ```jsx
 // ChildComponent.jsx
