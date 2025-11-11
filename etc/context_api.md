@@ -49,10 +49,10 @@ const App = () => {
 
   return (
     // Context Provider를 사용하여 하위 컴포넌트에 데이터를 제공. (보통 최상위 컴포넌트에서 설정한다.)
-    <CustomContext.Provider value={{ state, setState }}>
+    <CustomContext value={{ state, setState }}>
       // context를 적용할 하위 컴포넌트
       <ChildComponent />
-    </CustomContext.Provider>
+    </CustomContext>
   );
 };
 
@@ -63,7 +63,7 @@ export default App;
 <br />
 <br />
 
-2. Context 사용 - 나중에 값 세팅
+2. Context 사용
 
 <br />
 
@@ -96,39 +96,41 @@ export defalut function ChildComponent() {
 <br />
 <br />
 
-3. Context 사용 - 초깃값 세팅
+3. Context 사용 - 초깃값 세팅하여 사용
 
 <br />
 
-`1) Context 생성 시, 초깃값 설정`
+`1) Context 생성 시, 초깃값 설정 + Typescript`
 
-```js
-// CustomContext.js
+```ts
+// CustomContext.ts
 
 import { createContext } from 'react';
 
 // 초깃값을 설정 시 다른 컴포넌트에서 곧바로 사용할 수 있다.
-export const CustomContext = createContext('codej625');
+export const CustomContext = createContext<string>('codej625');
 ```
 
 <br />
 
-`2) Context 초깃값 사용`
+`2) Context 초깃값 사용 + Typescript`
 
-```jsx
-// ChildComponent.jsx
+```tsx
+// ChildComponent.tsx
 
 import { useContext } from 'react';
 import { CustomContext } from '...경로';
 
-export defalut function ChildComponent() {
-  // 초깃값 사용
+export default function ChildComponent() {
+  // useContext + 타입 안정성 보장
   const text = useContext(CustomContext);
 
+  // 초깃값을 설정했더라도 Provider가 없을 경우 undefined가 될 수 있기 때문에
+  // 안전하게 사용하려면 아래처럼 처리하는 것이 2025년 권장 방식
   return (
     <>
-      <p>{text}</p>
+      <p>{text ?? '게스트'}</p>
     </>
   );
-};
+}
 ```
