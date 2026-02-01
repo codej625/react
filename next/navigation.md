@@ -4,6 +4,7 @@
 <br />
 
 * Navigation의 작동원리
+
 ---
 
 ```
@@ -31,6 +32,7 @@ next/router (X)
 
 <br />
 <br />
+<br />
 
 2. 브라우저로 전달 되는 파일
 
@@ -43,6 +45,7 @@ RSC Payload로 전달되고,
 RSC Payload와 JS Bundle이 함께 내려온다.
 ```
 
+<br />
 <br />
 <br />
 
